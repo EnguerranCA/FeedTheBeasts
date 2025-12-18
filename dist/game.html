@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./src/assets/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon-BY3Tjqfz.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-BY3Tjqfz.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-BY3Tjqfz.png"
+    />
+    <link rel="manifest" href="/assets/favicon-BY3Tjqfz.png" />
+
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
+
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+
+    <!-- import for the keyboard -->
+    <script src="https://unpkg.com/aframe-environment-component@1.3.0/dist/aframe-environment-component.min.js"></script>
+    <script src="./src/components/super-keyboard/aframe-super-keyboard.js"></script>
+
+    <script type="text/javascript">
+      AFRAME.ASSETS_PATH = "./assets/materials";
+    </script>
+    <script>
+      gsap.registerPlugin();
+    </script>
+    <title>LetHimQuizz</title>
+    <script type="module" crossorigin src="./assets/index-BXzkNQk9.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D1ysZ1b0.css">
+  </head>
+  <body style="margin: 0; overflow: hidden">
+    <div
+      class="flex h-screen w-screen flex-col items-center justify-center bg-slate-100"
+    >
+      <h1 class="mb-40 text-center font-title text-7xl text-black">
+        Let Him Quizz
+      </h1>
+      <div id="loading" class="mb-10 text-center text-2xl text-black">
+        Loading...
+      </div>
+      <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+      </div>
+      <h3>A game by Brad , Enguerran et Bastien</h3>
+    </div>
+    <style>
+      #progress-bar-container {
+        width: 50%;
+        height: 30px;
+        background-color: #ccc;
+        z-index: 1000;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      #progress-bar {
+        width: 0;
+        height: 100%;
+        background-color: #4d3ae1;
+      }
+      a-scene {
+        display: none;
+      }
+    </style>
+
+    <a-scene
+      id="mainScene"
+      physics="gravity: -9.8 ; debug: false"
+      loading-screen="enabled: false"
+      raycaster="objects: .interactable"
+    >
+      <!-- keyboard test -->
+      <!-- <a-entity
+        id="keyboard"
+        class="interactable"
+        super-keyboard="imagePath:./src/assets/keyboard/"
+        position="1.1 1.076 -35.5"
+        rotation="-30 0 0"
+      ></a-entity> -->
+
+      <!-- Test screen top score on the left of the player while he plays -->
+      <a-box
+        position="-9 3.6 -38"
+        rotation=""
+        width="1"
+        height="1"
+        depth="1"
+        color="#475cff"
+        scale="0.5 7 6"
+      >
+      </a-box>
+
+      <a-assets>
+        <a-asset-item
+          id="tvModel"
+          src="./src/assets/modele3d/tv.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="beerModel"
+          src="./src/assets/modele3d/beer.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="roomModel"
+          src="./src/assets/modele3d/room.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="tableModel"
+          src="./src/assets/modele3d/table.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="sofaModel"
+          src="./src/assets/modele3d/sofa.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="stageModel"
+          src="./src/assets/modele3d/stage2.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="manModel"
+          src="./src/assets/modele3d/man.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="moneyDropTableModel"
+          src="./src/assets/modele3d/moneydroptable.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="spotModel"
+          src="./src/assets/modele3d/spot.glb"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="chickenGuyModel"
+          src="./src/assets/audiance/Chicken_guy.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="citizen1Model"
+          src="./src/assets/audiance/Citizen_1.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="citizen2Model"
+          src="./src/assets/audiance/Citizen_2.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="citizen3Model"
+          src="./src/assets/audiance/Citizen_3.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="cryptoBroModel"
+          src="./src/assets/audiance/Crypto_Bro.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="femaleOfficerModel"
+          src="./src/assets/audiance/Female_Officer.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="foodWorkerModel"
+          src="./src/assets/audiance/Food_Worker.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="genericFemaleModel"
+          src="./src/assets/audiance/Generic_Female.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="genericMaleModel"
+          src="./src/assets/audiance/Generic_Male.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="maleOfficerModel"
+          src="./src/assets/audiance/Male_Officer.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="prisonerModel"
+          src="./src/assets/audiance/Prisoner.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="retailWorkerModel"
+          src="./src/assets/audiance/Retail_Worker.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="rubberDuckModel"
+          src="./src/assets/audiance/Rubber_Duck.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="santaClausModel"
+          src="./src/assets/audiance/Santa_Claus.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="snowmanModel"
+          src="./src/assets/audiance/Snowman.glb"
+        ></a-asset-item>
+      </a-assets>
+      <div id="LoadingPage"></div>
+      <!-- camera -->
+      <!-- <a-entity
+        id="camera"
+        camera=""
+        look-controls="enabled: true"
+        position="0 2.2 0"
+        rotation="0 0 0"
+        wasd-controls="enabled: false"
+      ></a-entity> -->
+
+      <!-- Conteneur de la caméra (rig) qui se déplace -->
+      <a-entity id="rig" position="0 2.2 0">
+        <a-entity id="head" camera look-controls position="0 1.5 0"></a-entity>
+
+        <!-- Contrôleurs VR -->
+        <a-entity
+          id="rightController"
+          laser-controls="hand: right"
+          raycaster="objects: .interactable; showLine: true"
+          oculus-touch-controls="hand: right"
+          vive-controls="hand: right"
+          windows-motion-controls="hand: right"
+        ></a-entity>
+
+        <a-entity
+          id="leftController"
+          oculus-touch-controls="hand: left"
+        ></a-entity>
+      </a-entity>
+
+      <!-- ambient light -->
+      <a-light
+        class="ambient"
+        type="ambient"
+        color="#ffffff"
+        intensity="0.3"
+        position="5.82373 119.06988 -24.14106"
+      ></a-light>
+
+      <a-light
+        class="light spot"
+        type="point"
+        color="#ffffff"
+        intensity="1"
+        position="5.82373 119.06988 -24.14106"
+      ></a-light>
+      <a-light
+        class="light spot"
+        type="point"
+        color="#ffffff"
+        intensity="0.5"
+        position="5.82373 16.31798 42.8702"
+      ></a-light>
+      <!-- tv -->
+      <a-entity
+        gltf-model="#tvModel"
+        position="5.94 4.28 -25"
+        scale="40 40 40"
+        rotation="0 269.09000000000003 0"
+      ></a-entity>
+
+      <!-- beer -->
+      <a-entity
+        gltf-model="#beerModel"
+        position="-22.0848 -5.36063 12.97207"
+        scale="0.5 0.5 0.5"
+        rotation="0 269.09000000000003 0"
+      ></a-entity>
+
+      <!-- room -->
+      <a-entity
+        gltf-model="#roomModel"
+        position="5.94 -22.45 -25"
+        scale="25 25 25"
+        rotation="0 269.09000000000003 0"
+      ></a-entity>
+
+      <!-- table -->
+      <a-entity
+        gltf-model="#tableModel"
+        position="1.21 -14.6 -29.76"
+        scale="30 30 40"
+        rotation=""
+        material="metalness: 0; roughness: 1; shader: standard"
+      ></a-entity>
+
+      <!-- sofa -->
+      <a-entity
+        gltf-model="#sofaModel"
+        position="24.39 -23.35 5"
+        scale="50 50 50"
+        rotation=""
+      ></a-entity>
+
+      <!-- stage -->
+      <a-entity
+        gltf-model="#stageModel"
+        position="1.23833 -1.63184 -37.98841"
+        scale="0.67 0.69 0.44"
+        rotation=""
+        shape=""
+      >
+        <a-box
+          position="0 0 0"
+          width="20"
+          height="3.6"
+          depth="10"
+          color="#FF0000"
+          opacity="0.5"
+          body="type: static; shape: box;"
+        ></a-box>
+        <a-box
+          position="0 0 0"
+          width="1"
+          height="1"
+          depth="1"
+          color="#FF0000"
+          opacity="0.5"
+        ></a-box>
+      </a-entity>
+
+      <!-- anchorman -->
+      <a-entity
+        gltf-model="#manModel"
+        position="4.967 0.2031 -39.14591"
+        scale="0.75 0.75 0.75"
+        rotation="-0.4 -40 2.4"
+        animation-mixer="clip: HumanArmature|Man_Idle;"
+        id="anchorman"
+        class="interactable"
+      ></a-entity>
+
+      <!-- money drop table -->
+      <!-- <a-entity
+        gltf-model="#moneyDropTableModel"
+        position="8.8 0.2031 -39.14591"
+        scale="0.75 0.75 0.75"
+        rotation="0 90 0"
+        material="metalness: 1; roughness: 1; specular: #fff; shader: standard"
+      ></a-entity> -->
+      <a-sky color="#808080"></a-sky>
+      <!-- cylinder for money -->
+      <!-- it has 4 hit boxes on the sides and one on the floor -->
+      <a-cylinder
+        position="-4.525 2.600 -40.62386"
+        radius="0.7"
+        height="1.5"
+        color="#35B1B5"
+        scale="2.2 3 2.2"
+        material="opacity: 0.5; color: #d1d1ff"
+        body="type: static; shape: none;"
+        shape__side1="shape: box; halfExtents: 0.5 1.5 0.05; offset: 0 0 0.5;"
+        shape__side2="shape: box; halfExtents: 0.5 1.5 0.05; offset: 0 0 -0.5;"
+        shape__side3="shape: box; halfExtents: 0.05 1.5 0.5; offset: 0.5 0 0;"
+        shape__side4="shape: box; halfExtents: 0.05 1.5 0.5; offset: -0.5 0 0;"
+        shape__bottom="shape: cylinder; height: 0.05; radiusTop: 0.5; radiusBottom: 0.5; offset: 0 -0.75 0;"
+      ></a-cylinder>
+
+      <!-- screen -->
+      <a-box
+        position="0.99 3.22 -41.45168"
+        rotation=""
+        width="1"
+        height="1"
+        depth="1"
+        color="#475cff"
+        scale="8 5 1"
+        id="ecran"
+      ></a-box>
+
+      <!-- stage light -->
+      <!-- <a-entity
+        gltf-model="./src/assets/modele3d/spot.glb"
+        position="8.84924 7.47002 -33.78025"
+        scale="0.75 0.75 0.75"
+        rotation="-0.4 180 2.4"
+      ></a-entity> -->
+
+      <a-light
+        class="light spot"
+        type="point"
+        color="#b3b3ff"
+        intensity="1"
+        position="0.94658 6.536 -35.71878"
+      ></a-light>
+
+      <!-- stage floor -->
+      <a-plane
+        position="1.28077 -1.43517 -32.99556"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#000000"
+        scale="0.23 0.2 1"
+        material="metalness: 0; roughness: 1; shader: standard"
+      ></a-plane>
+
+      <!-- audiance -->
+      <a-entity
+        gltf-model="#chickenGuyModel"
+        position="10.2 -1.5 -24.8"
+        scale="1.3 1.4 1.3"
+        rotation="0 -150 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#citizen1Model"
+        position="7.3 -1.5 -24.9"
+        scale="1.1 1.2 1.1"
+        rotation="0 -160 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#citizen2Model"
+        position="4.1 -1.5 -24.7"
+        scale="1.5 1.6 1.5"
+        rotation="0 -170 0"
+        class="audience-member"
+      ></a-entity>
+
+      <a-entity
+        gltf-model="#citizen3Model"
+        position="-1.2 -1.5 -24.9"
+        scale="1.2 1.3 1.2"
+        rotation="0 -180 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#cryptoBroModel"
+        position="-4.4 -1.5 -24.8"
+        scale="1.4 1.5 1.4"
+        rotation="0 -190 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#femaleOfficerModel"
+        position="-7.1 -1.5 -24.9"
+        scale="1.3 1.4 1.3"
+        rotation="0 -200 0"
+        class="audience-member"
+      ></a-entity>
+      <!-- fin premiere ligne -->
+      <a-entity
+        gltf-model="#foodWorkerModel"
+        position="11.3 -1.5 -28.1"
+        scale="1.1 1.2 1.1"
+        rotation="0 -120 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#genericFemaleModel"
+        position="8.1 -1.5 -28.2"
+        scale="1.5 1.6 1.5"
+        rotation="0 -130 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#genericMaleModel"
+        position="5.4 -1.5 -28.3"
+        scale="1.2 1.3 1.2"
+        rotation="0 -140 0"
+        class="audience-member"
+      ></a-entity>
+
+      <a-entity
+        gltf-model="#maleOfficerModel"
+        position="-2.1 -1.5 -28.1"
+        scale="1.4 1.5 1.4"
+        rotation="0 -210 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#prisonerModel"
+        position="-5.2 -1.5 -28.2"
+        scale="1.3 1.4 1.3"
+        rotation="0 -220 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#retailWorkerModel"
+        position="-8.4 -1.5 -28.3"
+        scale="1.1 1.2 1.1"
+        rotation="0 -230 0"
+        class="audience-member"
+      ></a-entity>
+      <!-- fin deuxieme ligne -->
+
+      <a-entity
+        gltf-model="#rubberDuckModel"
+        position="11.2 -1.5 -30.6"
+        scale="1.5 1.6 1.5"
+        rotation="0 -110 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#santaClausModel"
+        position="8.4 -1.5 -30.4"
+        scale="1.2 1.3 1.2"
+        rotation="0 -120 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#snowmanModel"
+        position="5.3 -1.5 -30.5"
+        scale="1.4 1.5 1.4"
+        rotation="0 -130 0"
+        class="audience-member"
+      ></a-entity>
+
+      <a-entity
+        gltf-model="#citizen2Model"
+        position="-2.2 -1.5 -30.6"
+        scale="1.3 1.4 1.3"
+        rotation="0 -210 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#citizen3Model"
+        position="-5.3 -1.5 -30.4"
+        scale="1.1 1.2 1.1"
+        rotation="0 -220 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#citizen1Model"
+        position="-8.1 -1.5 -30.5"
+        scale="1.5 1.6 1.5"
+        rotation="0 -230 0"
+        class="audience-member"
+      ></a-entity>
+      <!-- fin troisieme ligne -->
+
+      <a-entity
+        gltf-model="#citizen1Model"
+        position="11.1 -1.5 -33.1"
+        scale="1.2 1.3 1.2"
+        rotation="0 -110 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#cryptoBroModel"
+        position="8.3 -1.5 -33.2"
+        scale="1.4 1.5 1.4"
+        rotation="0 -120 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#retailWorkerModel"
+        position="5.2 -1.5 -33.3"
+        scale="1.3 1.4 1.3"
+        rotation="0 -130 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#genericFemaleModel"
+        position="-2.3 -1.5 -33.1"
+        scale="1.1 1.2 1.1"
+        rotation="0 -210 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#foodWorkerModel"
+        position="-5.4 -1.5 -33.2"
+        scale="1.5 1.6 1.5"
+        rotation="0 -220 0"
+        class="audience-member"
+      ></a-entity>
+      <a-entity
+        gltf-model="#femaleOfficerModel"
+        position="-8.2 -1.5 -33.3"
+        scale="1.2 1.3 1.2"
+        rotation="0 -230 0"
+        class="audience-member"
+      ></a-entity>
+
+      <!-- Wrong answer Sound -->
+      <audio id="wrongAnswerSound" src="" position="0 1.6 -3"></audio>
+      <!--Correct answer Sound-->
+      <audio id="correctAnswerSound" src="" position="0 1.6 -3"></audio>
+      <!--Tic tac sound-->
+      <audio id="tictacSound" src="" position="0 1.6 -3"></audio>
+      <!--Tic tac ending sound-->
+      <audio id="tictacEndingSound" src="" position="0 1.6 -3"></audio>
+      <!--Swoosh sound-->
+      <audio id="swooshSound" src="" position="0 1.6 -3"></audio>
+      <!--Keyboard sound-->
+      <audio id="keyboardSound" src="" position="0 1.6 -3"></audio>
+      <!-- Ost sound -->
+      <audio id="ostSound" src="" position="0 1.6 -3" loop></audio>
+
+    </a-scene>
+
+    <script type="module" src="./src/main.js"></script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,106 @@
+[
+    {
+        "id": "monster1",
+        "name": "Gobelin Gourmand",
+        "description": "Un petit gobelin toujours affamé",
+        "color": "#4CAF50",
+        "model": "goblin.glb",
+        "preferredCategories": ["food", "item"],
+        "dialogue": {
+            "greeting": "Grmbl... J'ai faim !",
+            "happy": "Miam miam !",
+            "angry": "Pas ça ! Beurk !"
+        }
+    },
+    {
+        "id": "monster2",
+        "name": "Cyclope Affamé",
+        "description": "Un grand cyclope avec un gros appétit",
+        "color": "#9C27B0",
+        "model": "cyclops.glb",
+        "preferredCategories": ["artifact", "monster"],
+        "dialogue": {
+            "greeting": "MOI VOULOIR MANGER !",
+            "happy": "BON !",
+            "angry": "MOI PAS CONTENT !"
+        }
+    },
+    {
+        "id": "monster3",
+        "name": "Dragon Grignoteur",
+        "description": "Un petit dragon qui grignote tout",
+        "color": "#F44336",
+        "model": "dragon.glb",
+        "preferredCategories": ["magic", "artifact"],
+        "dialogue": {
+            "greeting": "*crache une petite flamme*",
+            "happy": "*ronronne*",
+            "angry": "*grogne*"
+        }
+    },
+    {
+        "id": "monster4",
+        "name": "Blob Vorace",
+        "description": "Une masse gélatineuse qui absorbe tout",
+        "color": "#2196F3",
+        "model": "blob.glb",
+        "preferredCategories": ["item", "food"],
+        "dialogue": {
+            "greeting": "*glouglou*",
+            "happy": "*splash joyeux*",
+            "angry": "*tremblote*"
+        }
+    },
+    {
+        "id": "monster5",
+        "name": "Fantôme Famélique",
+        "description": "Un spectre transparent toujours en quête",
+        "color": "#607D8B",
+        "model": "ghost.glb",
+        "preferredCategories": ["magic", "monster"],
+        "dialogue": {
+            "greeting": "Ooooooh...",
+            "happy": "Merciiii...",
+            "angry": "Nooooon..."
+        }
+    },
+    {
+        "id": "monster6",
+        "name": "Troll des Marais",
+        "description": "Un troll couvert de boue",
+        "color": "#795548",
+        "model": "troll.glb",
+        "preferredCategories": ["food", "item"],
+        "dialogue": {
+            "greeting": "Troll veut snack !",
+            "happy": "Mmmh... pas mal !",
+            "angry": "Troll pas aimer !"
+        }
+    },
+    {
+        "id": "monster7",
+        "name": "Sorcière Affamée",
+        "description": "Une vieille sorcière qui prépare un ragoût",
+        "color": "#673AB7",
+        "model": "witch.glb",
+        "preferredCategories": ["magic", "monster"],
+        "dialogue": {
+            "greeting": "Il me manque des ingrédients...",
+            "happy": "Parfait pour ma potion !",
+            "angry": "Ce n'est pas dans ma recette !"
+        }
+    },
+    {
+        "id": "monster8",
+        "name": "Vampire Gourmet",
+        "description": "Un vampire aux goûts raffinés",
+        "color": "#D32F2F",
+        "model": "vampire.glb",
+        "preferredCategories": ["artifact", "clothing"],
+        "dialogue": {
+            "greeting": "J'ai des envies... particulières",
+            "happy": "Exquis !",
+            "angry": "Quelle vulgarité !"
+        }
+    }
+]

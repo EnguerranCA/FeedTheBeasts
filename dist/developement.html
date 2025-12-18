@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let Him Quizz</title>
+    <link rel="icon" href="./src/assets/favicon.ico" type="image/x-icon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./src/assets/favicon/favicon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./src/assets/favicon/favicon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./src/assets/favicon/favicon.png"
+    />
+    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Thème Highlight.js (choisis celui que tu veux) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai.min.css"
+    />
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <!-- Composant PHP pour Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/php.min.js"></script>
+
+    <!-- Activer Highlight.js sur tous les blocs de code -->
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script type="module" crossorigin src="./assets/index-BXzkNQk9.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D1ysZ1b0.css">
+  </head>
+  <body>
+    <main class="flex flex-row">
+      <nav
+        class="sticky top-0 flex h-screen w-80 flex-col justify-between border-r-2 border-darckblue bg-slate-100 p-6"
+      >
+        <h1 class="text-center font-lucky text-4xl text-darckblue">
+          Let Him Quizz
+        </h1>
+        <h2 class="text-center text-2xl text-darckblue">Menu</h2>
+        <ul class="mt-8 flex flex-col gap-8 text-lg uppercase text-darckblue">
+          <li class="">
+            <a href="./landingpage.html" class="hover:underline">Home</a>
+          </li>
+          <li class=""><a href="#API" class="hover:underline">API</a></li>
+          <li class="">
+            <a href="#FindThePlace" class="hover:underline">Find The Place</a>
+          </li>
+          <li class="">
+            <a href="#sortitout" class="hover:underline">Sort It Out</a>
+          </li>
+          <li class="">
+            <a href="#SorryNotSoRich " class="hover:underline"
+              >Sorry Not so rich</a
+            >
+          </li>
+          <li class="">
+            <a href="#categorymode" class="hover:underline"
+              >Category mode</a
+            >
+          </li>
+          <li class="">
+            <a href="#SceneAnimation" class="hover:underline"
+              >Scene & Animation</a
+            >
+          </li>
+          <li class=""><a href="#schedule">Schedule</a></li>
+          <li class="">
+            <a href="#improvements" class="hover:underline"
+              >Potential improvements for a V2</a
+            >
+          </li>
+          <li class="">
+            <a href="#TimeSpent" class="hover:underline">Time Spent</a>
+          </li>
+        </ul>
+
+        <a
+          href="https://github.com/bastienggg/Let_him_quizz"
+          target="_blank"
+          class="flex w-full flex-row items-center justify-center gap-4 rounded-lg bg-darckblue p-6 font-lucky text-xl text-white"
+          ><img
+            class="aspect-square w-12"
+            src="./src/assets/landingpage/gitclear.svg"
+            alt=""
+          />Repository</a
+        >
+      </nav>
+      <section class="flex w-full flex-col bg-gray-100 px-20 text-darckblue">
+        <h1 class="m-20 mt-52 text-center font-lucky text-6xl">
+          The game's development
+        </h1>
+        <h3 class="mb-10 mt-44 text-left font-lucky text-3xl" id="API">API</h3>
+        <p class="text-xl">
+          We use an API to store the questions and answers needed for our
+          mini-games, and we retrieve them from the data using fetch with the
+          appropriate HTTP request. <br />
+          <br />
+          Our HTTP requests also allow us to create the leaderboard and add the
+          score along with the names of new players.
+        </p>
+        
+        <pre>
+            <code class="php text-xl rounded-md">
+$router = [
+    "MCQ" => new MCQController(),
+    "sort" => new SortController(),
+    "user" => new UserController(),
+    "place" => new PlaceController()
+];
+            </code>
+          </pre>
+          <p class="text-xl">
+            Definition of routes.
+          </p>
+          
+        <pre>
+            <code class="php text-xl rounded-md">
+//https://.../api/MCQ?difficulty=easy; https://.../api/MCQ?difficulty=medium; https://.../api/MCQ?difficulty=hard
+//https://.../api/sort?difficulty=easy; https://.../api/sort?difficulty=medium; https://.../api/sdifficulty=hard
+//https://.../api/user?param=top10  https://.../api/user?param=addUser&username=John&score=666
+//https://.../api/place?param=random
+            </code>
+          </pre>
+          <p class="text-xl">
+            Available address for the API.
+          </p>
+
+        <h3 class="mb-10 mt-20 text-left font-lucky text-3xl" id="FindThePlace">
+          Find The Place
+        </h3>
+        <p class="text-xl">
+          For our mini-game Find The Place, just like the others, we use
+          different functions that are called at the right moments.<br />
+          <br />
+          First, we display the game area with a template. To immerse the player
+          in a different environment, we use a skybox to display our 360°
+          images.<br />
+          Then, after 7 seconds in the box, the player must choose one of the
+          options in front of them—these options are shuffled beforehand to
+          avoid always having the same order.<br />
+          <br />
+          After playing three rounds of this mini-game, we move on to the next
+          one.<br />
+        </p>
+        <pre>
+              <code class="javascript text-xl rounded-md">
+const skyElement = document.createElement("a-sky");
+skyElement.setAttribute("class", "interactable");
+skyElement.setAttribute("position", "1.237 3 -35.03326");
+skyElement.setAttribute("id", "360Sky");
+skyElement.setAttribute("radius", "2");
+skyElement.setAttribute(
+  "src",
+  `./src/assets/360locations/${place.placeImage}`,
+);
+              </code>
+            </pre>
+            <p class="text-xl">
+              Implementation of the 360 photo.
+            </p>
+        <pre>
+                <code class="javascript text-xl rounded-md">
+FindThePlace.startTimer = function () {
+    // start the timer
+    timerValue = 0;
+  
+    document.querySelector("#timer a-text").setAttribute("value", timerValue);
+    setInterval(() => {
+      timerValue++;
+      document.querySelector("#timer a-text").setAttribute("value", timerValue);
+  
+      if (timerValue === 7) {
+        FindThePlace.removeQuizZone();
+      }
+    }, 1000);
+  };
+                </code>
+              </pre>
+              <p class="text-xl">
+                Start the timer for the game "Find the Place."
+              </p>
+        <pre>
+                <code class="javascript text-xl rounded-md">
+FindThePlace.renderPropositionsZone = function (){
+};
+FindThePlace.removeQuizZone = function (){
+};
+FindThePlace.renderQuestion = async function (){
+};
+FindThePlace.answerClicked = function (event){
+};
+FindThePlace.startTimer = function (){
+};
+FindThePlace.newRound = function (){
+};
+                </code>
+              </pre>
+              <p class="text-xl">
+                All the functions available for the operation of the game "Find the Place."
+              </p>
+        <pre>
+                <code class="javascript text-xl rounded-md">
+let propositions = place.propositions.slice();
+for (let i = propositions.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [propositions[i], propositions[j]] = [propositions[j], propositions[i]];
+}
+                </code>
+              </pre>
+              <p class="text-xl">
+                Used to randomize the solutions.
+              </p>
+
+        <h3 class="mb-10 mt-20 text-left font-lucky text-3xl" id="sortitout">
+          Sort It Out
+        </h3>
+        <p class="text-xl">
+          For our mini-game Sort It Out, we need to be able to move objects
+          using either the mouse or a VR controller. To do this, we first need
+          to specify which objects are interactive.<br />
+          <br />
+          In this game, we also add physics to the movable cubes. When clicking
+          on a cube, it temporarily loses its physics and becomes a static
+          object that follows the mouse position along the X and Y axes. Once
+          the click is released, the cube regains its dynamic status.<br />
+          <br />
+          Additionally, we need to detect the position of the boxes to check if
+          they are in the correct order.<br />
+        </p>
+        <pre>
+            <code class="javascript text-xl rounded-md">
+SortItOut.setupDraggables = function () {
+    AFRAME.registerComponent("draggable", {
+        init: function () {
+            const el = this.el;
+            let isDragging = false;
+
+            el.addEventListener("mousedown", () => {
+                isDragging = true;
+                el.setAttribute("dynamic-body", "mass: 0");
+            });
+
+            document.addEventListener("mousemove", (evt) => {
+                if (isDragging) {
+                    const raycaster = document.querySelector("a-scene").components.raycaster;
+                    const intersection = raycaster.getIntersection(el);
+
+                    if (intersection) {
+                        const point = intersection.point;
+                        el.setAttribute("position", `${point.x} ${point.y} ${el.getAttribute("position").z}`);
+                    }
+                }
+            });
+
+            document.addEventListener("mouseup", () => {
+                if (isDragging) {
+                    isDragging = false;
+                    el.setAttribute("dynamic-body", "mass: 5");
+                }
+            });
+        },
+    });
+};
+            </code>
+          </pre>
+          <p class="text-xl">
+            Function to set up the ability to move the boxes in a web format.
+          </p>
+        <pre>
+            <code class="javascript text-xl rounded-md">
+SortItOut.CheckIfInside = function (data) {
+    if (gameFinished) return;
+
+    const boxes = document.querySelectorAll("[id^='movableBox']");
+    const hollowBoxes = document.querySelectorAll("[id^='hollowBox']");
+
+    let allBoxesCorrect = true;
+
+    boxes.forEach(box => {
+        const boxPos = box.object3D.position;
+        let isInsideCorrectBox = false;
+
+        hollowBoxes.forEach(hollowBox => {
+            const hollowPos = hollowBox.object3D.position;
+
+            const hollowBoxSize = 0.8;
+            const minX = hollowPos.x - hollowBoxSize / 2,
+                maxX = hollowPos.x + hollowBoxSize / 2;
+            const minY = hollowPos.y - hollowBoxSize / 2,
+                maxY = hollowPos.y + hollowBoxSize / 2;
+            const minZ = hollowPos.z - hollowBoxSize / 2,
+                maxZ = hollowPos.z + hollowBoxSize / 2;
+
+            const movableBoxValue = box.getAttribute("data-valeur");
+            const hollowBoxValue = hollowBox.getAttribute("data-valeur");
+
+            if (
+                boxPos.x >= minX && boxPos.x = maxX &&
+                boxPos.y >= minY && boxPos.y = maxY &&
+                boxPos.z >= minZ && boxPos.z = maxZ
+            ) {
+                if (movableBoxValue === hollowBoxValue) {
+                    isInsideCorrectBox = true;
+                }
+            }
+        });
+
+        if (!isInsideCorrectBox) {
+            allBoxesCorrect = false;
+        }
+    });
+
+    if (allBoxesCorrect) {
+        Light.changeColor("#A3E447");
+        Sound.renderCorrectAnswer();
+        gameFinished = true;
+        Money.summonStack(2);
+
+        setTimeout(() => {
+            SortItOut.resetAndRenderZone();
+        }, 2000);
+    } else {
+        Light.changeColor("#FF662F");
+        Sound.renderWrongAnswer();
+        data.responses.forEach((response, index) => {
+            const answer = document.querySelector(`#answer${index + 1}`);
+            const box = document.querySelector(`#boxanswer${index + 1}`);
+            if (answer) {
+                box.setAttribute("color", "#FF662F");
+                answer.setAttribute("value", "");
+                answer.setAttribute("value", (index + 1) + ") " + response.answer);
+            }
+        });
+        gameFinished = true;
+        setTimeout(() => {
+            SortItOut.resetAndRenderZone();
+        }, 6000);
+
+    }
+};
+            </code>
+          </pre>
+          <p class="text-xl">
+            This function is used to verify if the boxes are in the correct place.
+          </p>
+        <pre>
+            <code class="javascript text-xl rounded-md">
+Vr.setupControllerClickHandler = function () {
+    AFRAME.registerComponent("occulus-grab", {
+        init: function () {
+            let el = this.el;
+            let isGrabbed = false;
+            let controller = null;
+
+            this.onGrabStart = (evt) => {
+                let raycaster = evt.target.components.raycaster;
+                if (!raycaster) return;
+
+                let intersectedEls = raycaster.intersectedEls;
+                if (intersectedEls.length === 0 || intersectedEls[0] !== el) return;
+
+                isGrabbed = true;
+                controller = evt.target;
+                el.setAttribute("dynamic-body", "mass: 0");
+                el.setAttribute("grab", "")
+                controller.addEventListener("triggerup", this.onGrabEnd);
+            };
+
+            this.onGrabEnd = () => {
+                if (isGrabbed) {
+                    el.setAttribute("dynamic-body", "mass: 1; restitution: 0.5; friction: 0.5");
+                    el.removeAttribute("grab");
+                    isGrabbed = false;
+                    controller.removeEventListener("triggerup", this.onGrabEnd);
+                    controller = null;
+                }
+            };
+
+            this.tick = function () {
+                if (isGrabbed && controller) {
+                    let controllerPos = new THREE.Vector3();
+                    let controllerQuat = new THREE.Quaternion();
+
+                    controller.object3D.getWorldPosition(controllerPos);
+                    controller.object3D.getWorldQuaternion(controllerQuat);
+
+                    // Appliquer la position directement pour un déplacement fluide
+                    let offset = new THREE.Vector3(-0.5, -1.8, -2.7);
+                    offset.applyQuaternion(controllerQuat);
+
+                    let newPosition = controllerPos.clone().add(offset);
+                    el.object3D.position.copy(newPosition);
+                }
+            };
+            // Écoute directement sur le contrôleur
+            el.sceneEl.addEventListener("triggerdown", this.onGrabStart);
+        }
+    });
+};
+            </code>
+          </pre>
+          <p class="text-xl">
+            This function is used to move the boxes in VR.
+          </p>
+        <h3
+          class="mb-10 mt-20 text-left font-lucky text-3xl"
+          id="SorryNotSoRich"
+        >
+          Sorry Not so rich
+        </h3>
+        <p class="text-xl">
+          For our mini-game Sorry Not So Rich, we need to manage the total
+          amount of money the player has earned in previous games so they can
+          bet it on different answers.<br />
+          To do this, we use Money functions to handle the player's funds based
+          on the various bets they place.<br />
+          <br />
+          We use indexes to manage the bets for each trap, as well as their
+          opening. For the banknotes displayed inside, we use a second template
+          and adjust the position of each new bill.<br />
+          <br />
+          Like the other mini-games, we also use additional functions, such as
+          Light or Sound, to indicate whether the player is correct or not.<br />
+        </p>
+        <pre>
+            <code class="javascript text-xl rounded-md">
+const addMoneyStackToTrapdoor = (index) => {
+    const trapdoor = trapdoors[index];
+    const moneyStack = document.createElement("a-entity");
+    moneyStack.setAttribute("gltf-model", "./src/assets/modele3d/money.glb");
+
+    // Calculate the position based on the number of money stacks already present
+    const existingStacks = trapdoor.querySelectorAll(".moneyStack").length;
+    const stackIndex = Math.floor(existingStacks / 5);
+    const yOffset = (existingStacks % 5) * 0.1; // Adjust the offset as needed
+    const xOffset = stackIndex * 0.2; // Adjust the offset for new stacks
+
+    moneyStack.setAttribute("position", `${xOffset} ${yOffset} 0.75`);
+    moneyStack.setAttribute("scale", "0.4 0.4 0.4");
+    moneyStack.classList.add("moneyStack");
+    trapdoor.appendChild(moneyStack);
+  };
+                
+            </code>
+          </pre>
+          <p class="text-xl">
+            This function is used to place the money on the traps.
+          </p>
+        <pre>
+            <code class="javascript text-xl rounded-md">
+const audio = {
+    correctAnswerSound: './src/assets/audio/correct-choice.mp3',
+    wrongAnswerSound: './src/assets/audio/wrong-choice.mp3',
+    tictacSound: './src/assets/audio/tic-tac.mp3',
+    tictacEndingSound: './src/assets/audio/timer-ending.mp3',
+    swooshSound: './src/assets/audio/swoosh.mp3',
+};
+
+let Sound = {};
+                
+            </code>
+          </pre>
+          <p class="text-xl">
+            The sound for the games.
+          </p>
+          <h3
+          class="mb-10 mt-20 text-left font-lucky text-3xl"
+          id="categorymode"
+        >
+        Category mode
+        </h3>
+        <p class="mb-10 text-xl">
+          We have also added the ability to sort by category, English or Trivia, allowing for a better gaming experience that better suits the player's preferences.
+        </p>
+        <img src="./src/assets/landingpage/mode.png" alt="" />
+        <h3
+          class="mb-10 mt-20 text-left font-lucky text-3xl"
+          id="SceneAnimation"
+        >
+          Scene & Animation
+        </h3>
+        <p class="mb-10 text-xl">
+          We retrieved some assets from poly.pizza and modified them in Blender
+          before placing them in our scene.<br />
+          <br />
+          Next, we added animations to the audience and the host to make the
+          environment more dynamic and immersive. When the player clicks on the
+          host, a popup appears to explain the rules of the current game.<br />
+        </p>
+        <img src="./src/assets/landingpage/sceneblender.png" alt="" />
+        <h3 class="mb-10 mt-20 text-left font-lucky text-3xl" id="schedule">
+          Schedule
+        </h3>
+        <p class="mb-10 text-xl">
+          <p class="mb-10 text-xl">
+            Here is our organization for this project.
+        </p>
+        </p>
+        <img src="./src/assets/landingpage/schedule.png" alt="" />
+        <h3 class="mb-10 mt-20 text-left font-lucky text-3xl" id="improvements">
+          Potential improvements for a V2
+        </h3>
+        <p class="mb-10 text-xl">
+          Add the ability to select the difficulty of the questions (which is
+          already manageable on the backend). <br />
+          <br />
+          Add the option for the player to choose which mini-games they want to
+          play<br />
+        </p>
+        <h3 class="mb-10 mt-20 text-left font-lucky text-3xl" id="TimeSpent">
+          Time Spent
+        </h3>
+        <p class="mb-10 text-xl">
+          Total estimated time spent on the project : 270h ( 90h per person ) <br />
+        </p>
+
+        <p class="text-center text-sm text-gray-600">
+          ©
+          <span class="font-lucky">Let Him Quizz</span>
+          - 2025
+        </p>
+      </section>
+    </main>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      nav ul li.active a {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    </style>
+  </body>
+</html>

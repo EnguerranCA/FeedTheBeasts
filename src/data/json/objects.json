@@ -1,0 +1,162 @@
+[
+    {
+        "id": "obj1",
+        "name": "Pomme pourrie",
+        "description": "Une pomme qui a connu des jours meilleurs",
+        "color": "#8B0000",
+        "model": "apple.glb",
+        "category": "food"
+    },
+    {
+        "id": "obj2",
+        "name": "Chaussette usée",
+        "description": "Une chaussette qui sent le vécu",
+        "color": "#696969",
+        "model": "sock.glb",
+        "category": "clothing"
+    },
+    {
+        "id": "obj3",
+        "name": "Livre moisi",
+        "description": "Un grimoire aux pages jaunies",
+        "color": "#8B4513",
+        "model": "book.glb",
+        "category": "artifact"
+    },
+    {
+        "id": "obj4",
+        "name": "Bougie fondue",
+        "description": "De la cire parfumée à l'abandon",
+        "color": "#FFFACD",
+        "model": "candle.glb",
+        "category": "item"
+    },
+    {
+        "id": "obj5",
+        "name": "Clé rouillée",
+        "description": "Ouvre-t-elle encore quelque chose ?",
+        "color": "#B87333",
+        "model": "key.glb",
+        "category": "artifact"
+    },
+    {
+        "id": "obj6",
+        "name": "Os rongé",
+        "description": "Reste d'un repas mystérieux",
+        "color": "#F5F5DC",
+        "model": "bone.glb",
+        "category": "food"
+    },
+    {
+        "id": "obj7",
+        "name": "Potion suspecte",
+        "description": "Liquide vert bouillonnant",
+        "color": "#00FF00",
+        "model": "potion.glb",
+        "category": "magic"
+    },
+    {
+        "id": "obj8",
+        "name": "Crâne poussiéreux",
+        "description": "Il sourit pour l'éternité",
+        "color": "#F0E68C",
+        "model": "skull.glb",
+        "category": "artifact"
+    },
+    {
+        "id": "obj9",
+        "name": "Plume magique",
+        "description": "Arrachée à un phénix",
+        "color": "#4169E1",
+        "model": "feather.glb",
+        "category": "magic"
+    },
+    {
+        "id": "obj10",
+        "name": "Cristal brisé",
+        "description": "Éclats d'une boule de voyance",
+        "color": "#E6E6FA",
+        "model": "crystal.glb",
+        "category": "magic"
+    },
+    {
+        "id": "obj11",
+        "name": "Champignon bizarre",
+        "description": "Ne pas consommer... ou si ?",
+        "color": "#FF6347",
+        "model": "mushroom.glb",
+        "category": "food"
+    },
+    {
+        "id": "obj12",
+        "name": "Fiole vide",
+        "description": "Contenait-elle un philtre d'amour ?",
+        "color": "#87CEEB",
+        "model": "vial.glb",
+        "category": "item"
+    },
+    {
+        "id": "obj13",
+        "name": "Parchemin ancien",
+        "description": "Écrit dans une langue oubliée",
+        "color": "#DEB887",
+        "model": "scroll.glb",
+        "category": "artifact"
+    },
+    {
+        "id": "obj14",
+        "name": "Dent de dragon",
+        "description": "Pointue et encore chaude",
+        "color": "#FAFAD2",
+        "model": "tooth.glb",
+        "category": "monster"
+    },
+    {
+        "id": "obj15",
+        "name": "Amulette cassée",
+        "description": "Protection brisée",
+        "color": "#FFD700",
+        "model": "amulet.glb",
+        "category": "artifact"
+    },
+    {
+        "id": "obj16",
+        "name": "Caillou brillant",
+        "description": "Pierre de lune ou simple mica ?",
+        "color": "#C0C0C0",
+        "model": "stone.glb",
+        "category": "item"
+    },
+    {
+        "id": "obj17",
+        "name": "Fromage puant",
+        "description": "Le préféré des trolls",
+        "color": "#FFFF00",
+        "model": "cheese.glb",
+        "category": "food"
+    },
+    {
+        "id": "obj18",
+        "name": "Boue séchée",
+        "description": "De la boue des marais maudits",
+        "color": "#8B4513",
+        "model": "mud.glb",
+        "category": "item"
+    },
+    {
+        "id": "obj19",
+        "name": "Œil de triton",
+        "description": "Ingrédient de potion classique",
+        "color": "#32CD32",
+        "model": "eye.glb",
+        "category": "monster"
+    },
+    {
+        "id": "obj20",
+        "name": "Chaîne rouillée",
+        "description": "Liens d'un prisonnier oublié",
+        "color": "#A0522D",
+        "model": "chain.glb",
+        "category": "item"
+    }
+]

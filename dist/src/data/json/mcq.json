@@ -1,0 +1,52 @@
+[
+    {
+        "question": "What is the capital of France?",
+        "answers": [
+            "Paris",
+            "London",
+            "Berlin",
+            "Madrid"
+        ],
+        "difficulty": 1
+    },
+    {
+        "question": "What is the largest planet in our solar system?",
+        "answers": [
+            "Jupiter",
+            "Earth",
+            "Mars",
+            "Venus"
+        ],
+        "difficulty": 2
+    },
+    {
+        "question": "Who wrote 'To Kill a Mockingbird'?",
+        "answers": [
+            "Harper Lee",
+            "Mark Twain",
+            "Ernest Hemingway",
+            "F. Scott Fitzgerald"
+        ],
+        "difficulty": 2
+    },
+    {
+        "question": "What is the chemical symbol for water?",
+        "answers": [
+            "H2O",
+            "O2",
+            "CO2",
+            "NaCl"
+        ],
+        "difficulty": 1
+    },
+    {
+        "question": "Who painted the Mona Lisa?",
+        "answers": [
+            "Leonardo da Vinci",
+            "Vincent van Gogh",
+            "Pablo Picasso",
+            "Claude Monet"
+        ],
+        "difficulty": 2
+    }
+]

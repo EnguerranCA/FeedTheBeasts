@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./src/assets/favicon.ico" type="image/x-icon" />
+    
+    <!-- A-Frame Core -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    
+    <!-- A-Frame Extras (pour animation-mixer) -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    
+    <title>Feed The Beasts</title>
+  </head>
+  <body style="margin: 0; overflow: hidden">
+    <!-- Écran de chargement et menu -->
+    <div id="loading-screen" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    ">
+      <h1 style="font-size: 3rem; margin-bottom: 2rem; color: #e94560;">🍖 Feed The Beasts 👾</h1>
+      
+      <div id="loading-progress" style="display: flex; flex-direction: column; align-items: center;">
+        <div id="loading-text" style="font-size: 1.5rem; margin-bottom: 1rem;">Loading...</div>
+        <div id="progress-bar-container" style="
+          width: 300px;
+          height: 20px;
+          background-color: #0f3460;
+          border-radius: 10px;
+          overflow: hidden;
+        ">
+          <div id="progress-bar" style="
+            width: 0;
+            height: 100%;
+            background-color: #e94560;
+            transition: width 0.3s;
+          "></div>
+        </div>
+      </div>
+
+      <div id="start-menu" style="display: none; text-align: center;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 500px;">
+          Nourrissez des monstres avec des objets bizarres !<br>
+          Cliquez sur les objets demandés et placez-les sur le comptoir.
+        </p>
+        
+        <button id="start-button" style="
+          padding: 15px 40px;
+          font-size: 1.5rem;
+          background-color: #e94560;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        " onmouseover="this.style.backgroundColor='#ff5577'" onmouseout="this.style.backgroundColor='#e94560'">
+          🎮 Commencer
+        </button>
+
+        <div style="margin-top: 2rem;">
+          <label style="font-size: 1.1rem; margin-right: 10px;">Durée:</label>
+          <select id="duration-select" style="
+            padding: 8px;
+            font-size: 1rem;
+            background-color: #0f3460;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-right: 20px;
+          ">
+            <option value="60">1 minute</option>
+            <option value="120" selected>2 minutes</option>
+            <option value="180">3 minutes</option>
+          </select>
+
+          <label style="font-size: 1.1rem; margin-right: 10px;">Difficulté:</label>
+          <select id="difficulty-select" style="
+            padding: 8px;
+            font-size: 1rem;
+            background-color: #0f3460;
+            color: white;
+            border: none;
+            border-radius: 5px;
+          ">
+            <option value="easy">Facile</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Difficile</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scène A-Frame -->
+    <a-scene
+      id="mainScene"
+      loading-screen="enabled: false"
+      raycaster="objects: .clickable"
+    >
+
+      <!-- Assets (modèles 3D, sons, etc.) -->
+      <a-assets>
+        <!-- Les assets seront chargés dynamiquement par le code -->
+      </a-assets>
+
+      <!-- Rig de la caméra (joueur) -->
+      <a-entity id="rig" position="0 0 2">
+        <!-- Caméra principale -->
+        <a-entity 
+          id="camera" 
+          camera 
+          look-controls="pointerLockEnabled: true"
+          position="0 1.6 0"
+        ></a-entity>
+
+        <!-- Contrôleur VR droit (main dominante) -->
+        <a-entity
+          id="rightController"
+          laser-controls="hand: right"
+          raycaster="objects: .clickable; showLine: true; lineColor: #00ff00"
+          oculus-touch-controls="hand: right"
+          vive-controls="hand: right"
+          windows-motion-controls="hand: right"
+        ></a-entity>
+
+        <!-- Contrôleur VR gauche -->
+        <a-entity
+          id="leftController"
+          laser-controls="hand: left"
+          oculus-touch-controls="hand: left"
+          vive-controls="hand: left"
+          windows-motion-controls="hand: left"
+        ></a-entity>
+      </a-entity>
+
+      <!-- Éclairage de la scène -->
+      <a-light type="ambient" color="#ffffff" intensity="0.6"></a-light>
+      <a-light type="directional" color="#ffffff" intensity="0.5" position="3 5 2"></a-light>
+      <a-light type="point" color="#ffddaa" intensity="0.3" position="0 2.5 0"></a-light>
+
+      <!-- Sol -->
+      <a-plane 
+        position="0 0 0" 
+        rotation="-90 0 0" 
+        width="20" 
+        height="20" 
+        color="#3a3a3a"
+        material="roughness: 0.9"
+      ></a-plane>
+
+      <!-- Murs du débarras -->
+      <a-box position="0 2 -5" width="20" height="4" depth="0.2" color="#4a4a4a"></a-box>
+      <a-box position="-10 2 0" width="0.2" height="4" depth="10" color="#4a4a4a"></a-box>
+      <a-box position="10 2 0" width="0.2" height="4" depth="10" color="#4a4a4a"></a-box>
+      <a-box position="0 2 5" width="20" height="4" depth="0.2" color="#4a4a4a"></a-box>
+
+      <!-- Fenêtre des monstres (devant le joueur) -->
+      <a-entity id="monster-window" position="0 1.8 -0.6">
+        <!-- Cadre de la fenêtre -->
+        <a-plane
+          width="1.2"
+          height="1.5"
+          color="#2c2c2c"
+          material="opacity: 0.95"
+        >
+        </a-plane>
+
+        <!-- Zone du monstre (centre de la fenêtre) -->
+        <a-entity id="current-monster" position="0 -0.2 0.05">
+          <!-- Monstre exemple visible immédiatement -->
+          <a-sphere radius="0.3" color="#4CAF50" position="0 0 0"></a-sphere>
+          <a-sphere radius="0.1" color="#ffffff" position="-0.12 0.12 0.25">
+            <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
+          </a-sphere>
+          <a-sphere radius="0.1" color="#ffffff" position="0.12 0.12 0.25">
+            <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
+          </a-sphere>
+        </a-entity>
+
+        <!-- Bulle de dialogue AU-DESSUS du monstre -->
+        <a-entity id="speech-bubble" position="0 0.5 0.1" visible="true" class="clickable" opacity="1">
+          <!-- Fond de la bulle -->
+          <a-plane
+            width="1"
+            height="0.6"
+            color="#ffffff"
+            material="opacity: 0.95; side: double"
+          ></a-plane>
+          
+          <!-- Texte de la demande -->
+          <a-text
+            id="monster-request"
+            value="Je veux:\n- Pomme pourrie\n- Chaussette usée"
+            align="center"
+            position="0 0 0.02"
+            width="0.9"
+            color="#000000"
+            wrap-count="20"
+          ></a-text>
+
+          <!-- Petit triangle pointer vers le bas -->
+          <a-cone 
+            position="0 -0.35 0" 
+            radius-bottom="0.08" 
+            radius-top="0" 
+            height="0.1" 
+            color="#ffffff"
+            rotation="0 0 0"
+          ></a-cone>
+        </a-entity>
+      </a-entity>
+
+      <!-- Comptoir (où déposer les objets) -->
+      <a-box
+        id="counter"
+        position="0 0.9 0"
+        width="1.5"
+        height="0.1"
+        depth="0.5"
+        color="#8B4513"
+        material="roughness: 0.8"
+      ></a-box>
+
+      <!-- Conteneur pour les objets du débarras -->
+      <a-entity id="objects-container"></a-entity>
+
+      <!-- Conteneur pour les bonus (oiseaux/vif d'or) -->
+      <a-entity id="bonus-container"></a-entity>
+
+      <!-- UI - Panneau de score -->
+      <a-plane
+        id="ui-panel"
+        position="-1.5 2 0.5"
+        rotation="0 45 0"
+        width="0.6"
+        height="0.8"
+        color="#1a1a2e"
+        material="opacity: 0.9"
+      >
+        <a-text
+          id="score-text"
+          value="$0"
+          align="center"
+          position="0 0.25 0.01"
+          color="#e94560"
+          width="1.2"
+        ></a-text>
+        <a-text
+          id="timer-text"
+          value="00:00"
+          align="center"
+          position="0 0 0.01"
+          color="#ffffff"
+          width="1"
+        ></a-text>
+        <a-text
+          id="order-text"
+          value="Order #1"
+          align="center"
+          position="0 -0.25 0.01"
+          color="#16213e"
+          width="0.8"
+        ></a-text>
+      </a-plane>
+
+      <!-- Ciel -->
+      <a-sky color="#1a1a2e"></a-sky>
+
+      <!-- Sons du jeu -->
+      <a-entity id="audio-container" position="0 1.6 0">
+        <audio id="bell-sound" src=""></audio>
+        <audio id="correct-sound" src=""></audio>
+        <audio id="wrong-sound" src=""></audio>
+        <audio id="ambient-sound" src="" loop></audio>
+      </a-entity>
+
+    </a-scene>
+
+    <!-- Script principal du jeu -->
+    <script type="module" src="./src/game-main.js"></script>
+  </body>
+</html>
