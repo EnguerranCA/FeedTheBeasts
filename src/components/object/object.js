@@ -15,12 +15,16 @@ const GameObject = {
     
     // Configuration
     config: {
+        // Zone de spawn des objets (autour du joueur, évitant la zone du monstre)
         spawnArea: {
-            minX: -4, maxX: 4,
-            minY: 0.5, maxY: 2.5,
-            minZ: -7, maxZ: -3
+            radius: 3,           // Rayon autour du joueur
+            minY: 1, maxY: 2.5,  // Hauteur des objets
+            excludeAngle: {      // Zone à éviter (devant le joueur où est le monstre)
+                min: -30,        // -30 degrés
+                max: 30          // +30 degrés
+            }
         },
-        objectCount: 20
+        objectCount: 10
     },
 
     /**
@@ -152,20 +156,22 @@ const GameObject = {
         // TODO: Remplacer par les modèles 3D
         entity.innerHTML = `
             <a-box 
-                width="0.3" 
-                height="0.3" 
-                depth="0.3" 
+                width="0.2" 
+                height="0.2" 
+                depth="0.2" 
                 color="${objData.color || '#888888'}"
-                class="interactable"
+                class="interactable clickable"
             ></a-box>
-            <a-text 
-                value="${objData.name}" 
-                position="0 0.3 0" 
-                align="center" 
-                width="2"
-                color="#ffffff"
-                look-at="[camera]"
-            ></a-text>
+            <a-entity look-at="#camera">
+                <a-text 
+                    value="${objData.name}" 
+                    position="0 0.3 0" 
+                    align="center" 
+                    width="1.5"
+                    color="#ffffff"
+                    material="shader: flat"
+                ></a-text>
+            </a-entity>
         `;
 
         // Stocker les données
@@ -185,15 +191,29 @@ const GameObject = {
     },
 
     /**
-     * Génère une position aléatoire dans la zone de spawn
+     * Génère une position aléatoire autour du joueur (360°) en évitant la zone du monstre
      * @returns {object} Position {x, y, z}
      */
     getRandomPosition: function() {
         const area = this.config.spawnArea;
+        
+        // Générer un angle aléatoire en évitant la zone du monstre (devant)
+        let angle;
+        do {
+            angle = Math.random() * 360; // Angle en degrés (0-360)
+        } while (angle > (180 + area.excludeAngle.min) && angle < (180 + area.excludeAngle.max));
+        
+        // Convertir en radians
+        const angleRad = (angle * Math.PI) / 180;
+        
+        // Rayon avec un peu de variation
+        const radius = area.radius * (0.4 + Math.random() * 0.5);
+        
+        // Calculer la position en coordonnées cylindriques
         return {
-            x: area.minX + Math.random() * (area.maxX - area.minX),
+            x: Math.sin(angleRad) * radius,
             y: area.minY + Math.random() * (area.maxY - area.minY),
-            z: area.minZ + Math.random() * (area.maxZ - area.minZ)
+            z: Math.cos(angleRad) * radius
         };
     },
 

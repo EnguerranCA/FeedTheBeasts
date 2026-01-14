@@ -9,6 +9,9 @@ const Monster = {
     // Monstre actuel
     current: null,
     
+    // Flag pour éviter les spawns multiples
+    isSpawning: false,
+    
     // Container DOM
     container: null,
     speechBubble: null,
@@ -86,15 +89,39 @@ const Monster = {
      * @param {object} orderData - Données de la commande
      */
     spawnNewMonster: async function(orderData) {
+        // Éviter les appels multiples en parallèle
+        if (this.isSpawning) {
+            console.log('[Monster] Spawn déjà en cours, ignoré');
+            return;
+        }
+        this.isSpawning = true;
+        
+        console.log('[Monster] spawnNewMonster appelé avec:', orderData);
+        
+        // Effacer le monstre précédent d'abord
+        this.clearMonster();
+        
         // Choisir un monstre aléatoire
         const monsterType = this.types[Math.floor(Math.random() * this.types.length)];
+        
+        // IMPORTANT : Créer this.current d'abord
         this.current = {
             ...monsterType,
             order: []
         };
+        
+        console.log('[Monster] Monstre actuel créé:', this.current);
 
-        // Effacer le monstre précédent
-        this.clearMonster();
+        // Vérifier que le conteneur existe
+        if (!this.container) {
+            console.error('[Monster] Container non trouvé !');
+            this.container = document.querySelector('#current-monster');
+        }
+
+        if (!this.container) {
+            console.error('[Monster] Impossible de trouver #current-monster');
+            return;
+        }
 
         // Créer le nouveau monstre (placeholder - remplacer par votre modèle 3D)
         const monsterEntity = document.createElement('a-entity');
@@ -102,17 +129,17 @@ const Monster = {
         
         // Pour l'instant, utiliser une forme simple
         monsterEntity.innerHTML = `
-            <a-sphere radius="0.5" color="${monsterType.color}" position="0 0 0"></a-sphere>
-            <a-sphere radius="0.15" color="#ffffff" position="-0.2 0.2 0.4">
-                <a-sphere radius="0.08" color="#000000" position="0 0 0.08"></a-sphere>
+            <a-sphere radius="0.3" color="${monsterType.color}" position="0 0 0"></a-sphere>
+            <a-sphere radius="0.1" color="#ffffff" position="-0.12 0.12 0.25">
+                <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
             </a-sphere>
-            <a-sphere radius="0.15" color="#ffffff" position="0.2 0.2 0.4">
-                <a-sphere radius="0.08" color="#000000" position="0 0 0.08"></a-sphere>
+            <a-sphere radius="0.1" color="#ffffff" position="0.12 0.12 0.25">
+                <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
             </a-sphere>
         `;
 
         // Animation d'entrée
-        monsterEntity.setAttribute('position', '0 -2 0');
+        monsterEntity.setAttribute('position', '0 -0.5 0');
         monsterEntity.setAttribute('animation', {
             property: 'position',
             to: '0 0 0',
@@ -121,9 +148,14 @@ const Monster = {
         });
 
         this.container.appendChild(monsterEntity);
+        console.log('[Monster] Monstre ajouté au DOM');
 
         // Générer la commande
         await this.generateOrder(orderData.size);
+        console.log('[Monster] Commande générée');
+        
+        // Réinitialiser le flag de spawn
+        this.isSpawning = false;
     },
 
     /**
@@ -178,12 +210,23 @@ const Monster = {
      * @param {Array} items - Liste des objets demandés
      */
     showRequest: function(items) {
-        if (!this.speechBubble || !this.requestText) return;
-
-        const itemNames = items.map(item => item.name).join('\n');
-        this.requestText.setAttribute('value', `Je veux:\n${itemNames}`);
+        console.log('[Monster] showRequest appelé avec:', items);
+        console.log('[Monster] speechBubble:', this.speechBubble);
+        console.log('[Monster] requestText:', this.requestText);
         
+        if (!this.speechBubble || !this.requestText) {
+            console.error('[Monster] Éléments manquants pour afficher la bulle');
+            return;
+        }
+
+        const itemNames = items.map(item => item.name).join('\n- ');
+        const requestText = `Je veux:\n- ${itemNames}`;
+        console.log('[Monster] Texte de la demande:', requestText);
+        
+        this.requestText.setAttribute('value', requestText);
         this.speechBubble.setAttribute('visible', 'true');
+        
+        console.log('[Monster] Bulle affichée !');
         
         // Animation d'apparition
         this.speechBubble.setAttribute('animation', {
@@ -283,10 +326,16 @@ const Monster = {
      * Supprime le monstre actuel
      */
     clearMonster: function() {
+        // Vider complètement le container du monstre
         if (this.container) {
             this.container.innerHTML = '';
+        } else {
+            // Fallback: supprimer tous les monstres par ID
+            const oldMonsters = document.querySelectorAll('#monster-model');
+            oldMonsters.forEach(monster => monster.remove());
         }
-        this.current = null;
+        // NE PAS mettre this.current à null ici car on vient de le créer
+        // this.current = null;
     },
 
     /**
