@@ -15,16 +15,39 @@ const GameObject = {
     
     // Configuration
     config: {
-        // Zone de spawn des objets (autour du joueur, évitant la zone du monstre)
-        spawnArea: {
-            radius: 3,           // Rayon autour du joueur
-            minY: 1, maxY: 2.5,  // Hauteur des objets
-            excludeAngle: {      // Zone à éviter (devant le joueur où est le monstre)
-                min: -30,        // -30 degrés
-                max: 30          // +30 degrés
-            }
-        },
-        objectCount: 10
+        objectCount: 20,
+        // Liste des positions prédéfinies pour les objets (autour du joueur, évitant la zone du monstre)
+        positions: [
+            // Mur gauche (X négatif)
+            { x: -3, y: 1.2, z: -2 },
+            { x: -3, y: 2.0, z: -1 },
+            { x: -3, y: 1.5, z: 0 },
+            { x: -3, y: 2.2, z: 1 },
+            { x: -3, y: 1.8, z: 2 },
+            
+            // Mur arrière (Z positif - derrière le joueur)
+            { x: -2, y: 1.5, z: 3 },
+            { x: -1, y: 2.0, z: 3 },
+            { x: 0, y: 1.3, z: 3 },
+            { x: 1, y: 2.2, z: 3 },
+            { x: 2, y: 1.8, z: 3 },
+            
+            // Mur droit (X positif)
+            { x: 3.5, y: 1.4, z: 2 },
+            { x: 3.5, y: 2.0, z: 1 },
+            { x: 3.5, y: 1.7, z: 0 },
+            { x: 3.5, y: 2.3, z: -1 },
+            { x: 3.5, y: 1.5, z: -2 },
+            
+            // Coins et positions intermédiaires
+            { x: -2.5, y: 1.6, z: 2.5 },  // Coin arrière gauche
+            { x: 2.5, y: 1.9, z: 2.5 },   // Coin arrière droit
+            { x: -2.5, y: 2.1, z: -2.5 }, // Coin avant gauche
+            { x: 2.5, y: 1.4, z: -2.5 },  // Coin avant droit
+            
+            // Position basse centrale
+            { x: 0, y: 0.8, z: 2 }
+        ]
     },
 
     /**
@@ -82,6 +105,9 @@ const GameObject = {
     spawnObjects: async function() {
         // Nettoyer les objets existants
         this.clearObjects();
+        
+        // Mélanger les positions au début de la partie
+        this.shuffleAllPositions();
 
         // Charger les données des objets
         const objectsData = await this.loadObjectsData();
@@ -194,27 +220,37 @@ const GameObject = {
      * Génère une position aléatoire autour du joueur (360°) en évitant la zone du monstre
      * @returns {object} Position {x, y, z}
      */
+    // Index pour la position suivante (après mélange)
+    positionIndex: 0,
+    shuffledPositions: [],
+
+    /**
+     * Mélange les positions au début de chaque partie
+     */
+    shuffleAllPositions: function() {
+        // Créer une copie et mélanger
+        this.shuffledPositions = [...this.config.positions].sort(() => Math.random() - 0.5);
+        this.positionIndex = 0;
+    },
+
+    /**
+     * Obtient la prochaine position de la liste mélangée
+     * @returns {object} Position {x, y, z}
+     */
+    getNextPosition: function() {
+        if (this.shuffledPositions.length === 0 || this.positionIndex >= this.shuffledPositions.length) {
+            // Si on n'a pas encore mélangé ou si on a utilisé toutes les positions
+            this.shuffleAllPositions();
+        }
+        return this.shuffledPositions[this.positionIndex++];
+    },
+
+    /**
+     * Retourne une position pour un objet (utilise les positions prédéfinies)
+     * @returns {object} Position {x, y, z}
+     */
     getRandomPosition: function() {
-        const area = this.config.spawnArea;
-        
-        // Générer un angle aléatoire en évitant la zone du monstre (devant)
-        let angle;
-        do {
-            angle = Math.random() * 360; // Angle en degrés (0-360)
-        } while (angle > (180 + area.excludeAngle.min) && angle < (180 + area.excludeAngle.max));
-        
-        // Convertir en radians
-        const angleRad = (angle * Math.PI) / 180;
-        
-        // Rayon avec un peu de variation
-        const radius = area.radius * (0.4 + Math.random() * 0.5);
-        
-        // Calculer la position en coordonnées cylindriques
-        return {
-            x: Math.sin(angleRad) * radius,
-            y: area.minY + Math.random() * (area.maxY - area.minY),
-            z: Math.cos(angleRad) * radius
-        };
+        return this.getNextPosition();
     },
 
     /**
