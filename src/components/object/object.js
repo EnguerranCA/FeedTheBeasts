@@ -84,7 +84,7 @@ const GameObject = {
 
         // Nouvelle commande - repositionner les objets
         document.addEventListener('game:newOrder', () => {
-            this.shufflePositions();
+            this.resetObjectsForNewOrder();
         });
 
         // Bonus: surbrillance
@@ -124,7 +124,7 @@ const GameObject = {
      */
     loadObjectsData: async function() {
         try {
-            const response = await fetch('./src/data/json/objects.json');
+            const response = await fetch('./src/data/json/objects-3d.json');
             return await response.json();
         } catch (error) {
             console.error('[GameObject] Erreur chargement:', error);
@@ -139,26 +139,25 @@ const GameObject = {
      */
     getDefaultObjects: function() {
         return [
-            { id: 'obj1', name: 'Pomme pourrie', color: '#8B0000' },
-            { id: 'obj2', name: 'Chaussette usée', color: '#696969' },
-            { id: 'obj3', name: 'Livre moisi', color: '#8B4513' },
-            { id: 'obj4', name: 'Bougie fondue', color: '#FFFACD' },
-            { id: 'obj5', name: 'Clé rouillée', color: '#B87333' },
-            { id: 'obj6', name: 'Os rongé', color: '#F5F5DC' },
-            { id: 'obj7', name: 'Potion suspecte', color: '#00FF00' },
-            { id: 'obj8', name: 'Crâne poussiéreux', color: '#F0E68C' },
-            { id: 'obj9', name: 'Plume magique', color: '#4169E1' },
-            { id: 'obj10', name: 'Cristal brisé', color: '#E6E6FA' },
-            { id: 'obj11', name: 'Champignon bizarre', color: '#FF6347' },
-            { id: 'obj12', name: 'Fiole vide', color: '#87CEEB' },
-            { id: 'obj13', name: 'Parchemin ancien', color: '#DEB887' },
-            { id: 'obj14', name: 'Dent de dragon', color: '#FAFAD2' },
-            { id: 'obj15', name: 'Amulette cassée', color: '#FFD700' },
-            { id: 'obj16', name: 'Caillou brillant', color: '#C0C0C0' },
-            { id: 'obj17', name: 'Fromage puant', color: '#FFFF00' },
-            { id: 'obj18', name: 'Boue séchée', color: '#8B4513' },
-            { id: 'obj19', name: 'Oeil de triton', color: '#32CD32' },
-            { id: 'obj20', name: 'Chaîne rouillée', color: '#A0522D' }
+            { id: 'obj1', name: 'Baby Chick', label: 'Poussin', path: './src/assets/tofind/Baby chick.glb', scale: 0.5 },
+            { id: 'obj2', name: 'Baseball', label: 'Baseball', path: './src/assets/tofind/Baseball.glb', scale: 0.3 },
+            { id: 'obj3', name: 'Basketball', label: 'Basketball', path: './src/assets/tofind/Basketball.glb', scale: 0.4 },
+            { id: 'obj4', name: 'Broom', label: 'Balai', path: './src/assets/tofind/Broom.glb', scale: 0.6 },
+            { id: 'obj5', name: 'Bus', label: 'Bus', path: './src/assets/tofind/Bus.glb', scale: 0.5 },
+            { id: 'obj6', name: 'Crab', label: 'Crabe', path: './src/assets/tofind/Crab.glb', scale: 0.4 },
+            { id: 'obj7', name: 'Diamond Block', label: 'Bloc de Diamant', path: './src/assets/tofind/Diamond Block.glb', scale: 0.3 },
+            { id: 'obj8', name: 'Egg', label: 'Œuf', path: './src/assets/tofind/Egg.glb', scale: 0.3 },
+            { id: 'obj9', name: 'Great Horned Owl', label: 'Hibou', path: './src/assets/tofind/Great horned owl.glb', scale: 0.5 },
+            { id: 'obj10', name: 'Moon', label: 'Lune', path: './src/assets/tofind/Moon.glb', scale: 0.4 },
+            { id: 'obj11', name: 'Soccer Football', label: 'Ballon de Foot', path: './src/assets/tofind/Simple soccer football.glb', scale: 0.3 },
+            { id: 'obj12', name: 'Snowman', label: 'Bonhomme de Neige', path: './src/assets/tofind/Snowman.glb', scale: 0.5 },
+            { id: 'obj13', name: 'Spider', label: 'Araignée', path: './src/assets/tofind/Spider.glb', scale: 0.4 },
+            { id: 'obj14', name: 'T-Rex', label: 'T-Rex', path: './src/assets/tofind/T-Rex.glb', scale: 0.5 },
+            { id: 'obj15', name: 'Table Tennis Paddle', label: 'Raquette de Ping-Pong', path: './src/assets/tofind/Table Tennis Paddle.glb', scale: 0.4 },
+            { id: 'obj16', name: 'Taco', label: 'Taco', path: './src/assets/tofind/Taco.glb', scale: 0.3 },
+            { id: 'obj17', name: 'Tambourine', label: 'Tambourin', path: './src/assets/tofind/Tambourine.glb', scale: 0.4 },
+            { id: 'obj18', name: 'Tennis Ball', label: 'Balle de Tennis', path: './src/assets/tofind/Tennis ball.glb', scale: 0.2 },
+            { id: 'obj19', name: 'Toy Mouse', label: 'Souris Jouet', path: './src/assets/tofind/Toy Mouse.glb', scale: 0.3 }
         ];
     },
 
@@ -178,31 +177,24 @@ const GameObject = {
         entity.setAttribute('clickable', `objectId: ${objData.id}; type: object`);
         entity.setAttribute('position', `${position.x} ${position.y} ${position.z}`);
 
-        // Pour l'instant, utiliser des boîtes colorées
-        // TODO: Remplacer par les modèles 3D
+        // Utiliser le modèle 3D GLB
+        const scale = objData.scale || 0.3;
+        
+        // Appliquer le scale sur l'entité parente pour que le hover fonctionne correctement
+        entity.setAttribute('scale', `${scale} ${scale} ${scale}`);
+        
         entity.innerHTML = `
-            <a-box 
-                width="0.2" 
-                height="0.2" 
-                depth="0.2" 
-                color="${objData.color || '#888888'}"
+            <a-entity 
+                gltf-model="${objData.path}"
                 class="interactable clickable"
-            ></a-box>
-            <a-entity look-at="#camera">
-                <a-text 
-                    value="${objData.name}" 
-                    position="0 0.3 0" 
-                    align="center" 
-                    width="1.5"
-                    color="#ffffff"
-                    material="shader: flat"
-                ></a-text>
-            </a-entity>
+            ></a-entity>
         `;
 
-        // Stocker les données
+        // Stocker les données et le scale original
         entity.dataset.objectId = objData.id;
         entity.dataset.objectName = objData.name;
+        entity.dataset.objectLabel = objData.label;
+        entity.setAttribute('data-original-scale', `${scale} ${scale} ${scale}`);
 
         // Ajouter au container
         this.container.appendChild(entity);
@@ -280,26 +272,31 @@ const GameObject = {
         const counterItems = document.querySelector('#counter-items');
         const itemCount = Game.state.collectedItems.length;
 
-        // Position sur le comptoir
+        // Position relative sur le comptoir
         const targetPos = {
-            x: -1 + itemCount * 0.5,
+            x: -0.5 + itemCount * 0.25,
             y: 0,
             z: 0
         };
 
-        // Animation vers le comptoir
+        // Animation vers le comptoir (position absolue temporaire)
         element.setAttribute('animation', {
             property: 'position',
-            to: `0 1.5 -8`,
+            to: `0 1.5 0`,
             dur: 500,
             easing: 'easeInOutQuad'
         });
 
         // Après l'animation, déplacer dans le container du comptoir
         setTimeout(() => {
-            element.setAttribute('position', `${targetPos.x} ${targetPos.y} ${targetPos.z}`);
-            element.setAttribute('scale', '0.7 0.7 0.7');
+            // Déplacer dans le container du comptoir
             counterItems.appendChild(element);
+            
+            // Position relative dans le container
+            element.setAttribute('position', `${targetPos.x} ${targetPos.y} ${targetPos.z}`);
+            
+            // Réduire la taille pour le comptoir (mais sauvegarder l'original)
+            element.setAttribute('scale', '0.7 0.7 0.7');
         }, 500);
 
         // Retirer de la liste active
@@ -324,6 +321,51 @@ const GameObject = {
     },
 
     /**
+     * Réinitialise les objets pour une nouvelle commande
+     * Récupère les objets du comptoir et les remet dans le jeu
+     */
+    resetObjectsForNewOrder: function() {
+        // Récupérer les objets qui sont sur le comptoir
+        const counterItems = document.querySelector('#counter-items');
+        if (counterItems) {
+            const collectedObjects = Array.from(counterItems.children);
+            
+            collectedObjects.forEach(element => {
+                // Restaurer le scale original
+                const originalScale = element.getAttribute('data-original-scale');
+                if (originalScale) {
+                    element.setAttribute('scale', originalScale);
+                }
+                
+                // Remettre l'objet dans le container principal
+                this.container.appendChild(element);
+                
+                // Récupérer les données de l'objet
+                const objectId = element.dataset.objectId;
+                const objectData = element.dataset;
+                
+                // Ajouter à la liste active si pas déjà présent
+                if (!this.activeObjects.find(obj => obj.id === objectId)) {
+                    this.activeObjects.push({
+                        id: objectId,
+                        element: element,
+                        data: {
+                            id: objectId,
+                            name: objectData.objectName,
+                            label: objectData.objectLabel,
+                            scale: parseFloat(originalScale.split(' ')[0])
+                        },
+                        position: { x: 0, y: 0, z: 0 } // Sera mis à jour ci-dessous
+                    });
+                }
+            });
+        }
+        
+        // Maintenant mélanger les positions de TOUS les objets
+        this.shufflePositions();
+    },
+
+    /**
      * Met en surbrillance les objets de la commande
      */
     highlightOrderObjects: function() {
@@ -331,10 +373,15 @@ const GameObject = {
         
         this.activeObjects.forEach(obj => {
             if (orderIds.includes(obj.id)) {
-                obj.element.querySelector('a-box').setAttribute('animation__glow', {
-                    property: 'material.emissive',
-                    from: '#000000',
-                    to: '#FFFF00',
+                // Récupérer le scale original de l'entité parente
+                const originalScale = obj.element.getAttribute('data-original-scale');
+                const scaleValue = parseFloat(originalScale.split(' ')[0]);
+                const targetScale = scaleValue * 1.3;
+                
+                obj.element.setAttribute('animation__glow', {
+                    property: 'scale',
+                    from: `${scaleValue} ${scaleValue} ${scaleValue}`,
+                    to: `${targetScale} ${targetScale} ${targetScale}`,
                     dur: 500,
                     dir: 'alternate',
                     loop: true
@@ -353,10 +400,11 @@ const GameObject = {
      */
     clearHighlight: function() {
         this.activeObjects.forEach(obj => {
-            const box = obj.element.querySelector('a-box');
-            if (box) {
-                box.removeAttribute('animation__glow');
-                box.setAttribute('material', 'emissive', '#000000');
+            obj.element.removeAttribute('animation__glow');
+            // Restaurer le scale original
+            const originalScale = obj.element.getAttribute('data-original-scale');
+            if (originalScale) {
+                obj.element.setAttribute('scale', originalScale);
             }
         });
     },
@@ -369,9 +417,14 @@ const GameObject = {
         
         this.activeObjects.forEach(obj => {
             if (orderIds.includes(obj.id)) {
+                // Récupérer le scale original et l'agrandir de 50%
+                const originalScale = obj.element.getAttribute('data-original-scale');
+                const scaleValue = parseFloat(originalScale.split(' ')[0]);
+                const targetScale = scaleValue * 1.5;
+                
                 obj.element.setAttribute('animation__scale', {
                     property: 'scale',
-                    to: '1.5 1.5 1.5',
+                    to: `${targetScale} ${targetScale} ${targetScale}`,
                     dur: 300
                 });
             }
@@ -380,7 +433,10 @@ const GameObject = {
         // Retour à la normale après 15 secondes
         setTimeout(() => {
             this.activeObjects.forEach(obj => {
-                obj.element.setAttribute('scale', '1 1 1');
+                const originalScale = obj.element.getAttribute('data-original-scale');
+                if (originalScale) {
+                    obj.element.setAttribute('scale', originalScale);
+                }
             });
         }, 15000);
     },

@@ -317,16 +317,43 @@ const VRController = {
             const originalColor = element.getAttribute('color') || '#ffffff';
             element.setAttribute('data-original-color', originalColor);
             
-            // Appliquer un effet de surbrillance
+            // Sauvegarder le scale original s'il n'existe pas déjà
+            if (!element.hasAttribute('data-original-scale')) {
+                const currentScale = element.getAttribute('scale');
+                if (currentScale) {
+                    element.setAttribute('data-original-scale', 
+                        typeof currentScale === 'object' 
+                            ? `${currentScale.x} ${currentScale.y} ${currentScale.z}`
+                            : currentScale
+                    );
+                } else {
+                    element.setAttribute('data-original-scale', '1 1 1');
+                }
+            }
+            
+            // Récupérer le scale original
+            const originalScale = element.getAttribute('data-original-scale');
+            const scaleValues = originalScale.split(' ').map(v => parseFloat(v));
+            
+            // Appliquer un effet de surbrillance avec le scale augmenté de 5%
             element.setAttribute('color', this.lightenColor(originalColor, 30));
-            element.setAttribute('scale', '1.05 1.05 1.05');
+            element.setAttribute('scale', 
+                `${scaleValues[0] * 1.05} ${scaleValues[1] * 1.05} ${scaleValues[2] * 1.05}`
+            );
         } else {
             // Restaurer la couleur originale
             const originalColor = element.getAttribute('data-original-color');
             if (originalColor) {
                 element.setAttribute('color', originalColor);
             }
-            element.setAttribute('scale', '1 1 1');
+            
+            // Restaurer le scale original
+            const originalScale = element.getAttribute('data-original-scale');
+            if (originalScale) {
+                element.setAttribute('scale', originalScale);
+            } else {
+                element.setAttribute('scale', '1 1 1');
+            }
         }
     },
 

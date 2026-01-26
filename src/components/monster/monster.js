@@ -190,17 +190,17 @@ const Monster = {
      */
     loadObjectsData: async function() {
         try {
-            const response = await fetch('./src/data/json/objects.json');
+            const response = await fetch('./src/data/json/objects-3d.json');
             return await response.json();
         } catch (error) {
             console.error('[Monster] Erreur chargement objets:', error);
             // Retourner des objets par défaut pour le développement
             return [
-                { id: 'obj1', name: 'Pomme pourrie' },
-                { id: 'obj2', name: 'Chaussette usée' },
-                { id: 'obj3', name: 'Livre moisi' },
-                { id: 'obj4', name: 'Bougie fondue' },
-                { id: 'obj5', name: 'Clé rouillée' }
+                { id: 'obj1', name: 'Baby Chick', label: 'Poussin' },
+                { id: 'obj2', name: 'Baseball', label: 'Baseball' },
+                { id: 'obj3', name: 'Basketball', label: 'Basketball' },
+                { id: 'obj4', name: 'Broom', label: 'Balai' },
+                { id: 'obj5', name: 'Bus', label: 'Bus' }
             ];
         }
     },
@@ -219,8 +219,9 @@ const Monster = {
             return;
         }
 
-        const itemNames = items.map(item => item.name).join('\n- ');
-        const requestText = `Je veux:\n- ${itemNames}`;
+        // Utiliser le label au lieu du name
+        const itemLabels = items.map(item => item.label || item.name).join('\n- ');
+        const requestText = `Je veux:\n- ${itemLabels}`;
         console.log('[Monster] Texte de la demande:', requestText);
         
         this.requestText.setAttribute('value', requestText);

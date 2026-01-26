@@ -7,7 +7,6 @@
             "command": "qb64",
             "args": [
                 "-x",
-                "-p",
                 "${file}",
                 "-o",
                 "${fileBasenameNoExtension}"
@@ -16,7 +15,6 @@
                 "command": "qb64.exe",
                 "args": [
                     "-x",
-                    "-p",
                     "${file}",
                     "-o",
                     "${fileBasenameNoExtension}.exe"
@@ -49,7 +47,6 @@
             "command": "qb64pe",
             "args": [
                 "-x",
-                "-p",
                 "${file}",
                 "-o",
                 "${fileBasenameNoExtension}"
@@ -58,7 +55,6 @@
                 "command": "qb64pe.exe",
                 "args": [
                     "-x",
-                    "-p",
                     "${file}",
                     "-o",
                     "${fileBasenameNoExtension}.exe"
@@ -86,5 +82,5 @@
             }
         }
     ],
-    "extensionVersion": "1.1.3"
+    "extensionVersion": "1.1.4"
 }
