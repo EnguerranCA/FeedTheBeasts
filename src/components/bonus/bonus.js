@@ -4,7 +4,7 @@
  */
 
 import { Game } from '../../core/Game.js';
-import { Audio } from '../../core/Audio.js';
+import { soundManager } from '../../core/Sound.js';
 
 const Bonus = {
     // Container des bonus
@@ -231,8 +231,8 @@ const Bonus = {
 
         console.log('[Bonus] Collecté:', bonus.type.name);
 
-        // Jouer le son
-        Audio.play('bonus');
+        // Jouer le son (géré par Game.activateBonus)
+        // soundManager.playSound('bonus');
 
         // Appliquer l'effet
         this.applyBonusEffect(bonus.type);

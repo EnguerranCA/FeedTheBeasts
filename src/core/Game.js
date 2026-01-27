@@ -3,6 +3,8 @@
  * Gère l'état du jeu, le timer, le score, et la logique de jeu
  */
 
+import { playSound, playMusic, stopMusic } from '../utils/playSound.js';
+
 const Game = {
     // État du jeu
     state: {
@@ -15,6 +17,9 @@ const Game = {
         currentOrder: [],
         collectedItems: []
     },
+
+    // Musique en cours
+    currentMusic: null,
 
     // Configuration par difficulté
     config: {
@@ -140,6 +145,9 @@ const Game = {
             gameWorld.setAttribute('visible', 'true');
         }
 
+        // Jouer la musique du jeu
+        this.currentMusic = playMusic('gameMusic', 0.3);
+
         // Démarrer le timer
         this.startTimer();
 
@@ -204,6 +212,9 @@ const Game = {
         if (orderIndex !== -1) {
             // Bon objet !
             this.state.collectedItems.push(objectId);
+            
+            // NE PAS jouer de son ici - on attend la validation complète
+            
             this.emit('game:correctObject', { objectId });
 
             // Vérifier si la commande est complète
@@ -212,6 +223,10 @@ const Game = {
             }
         } else {
             // Mauvais objet
+            
+            // Jouer le son d'erreur
+            playSound('wrong', 0.6);
+            
             this.emit('game:wrongObject', { objectId });
         }
     },
@@ -234,7 +249,10 @@ const Game = {
         const earned = Math.floor(baseScore * difficultyMultiplier[this.state.difficulty]) + timeBonus;
         this.state.score += earned;
 
-        console.log('[Game] Commande complétée! +$' + earned);
+        console.log('[Game] 🎉 Commande complétée! +$' + earned);
+
+        // Jouer UNIQUEMENT le son "correct" quand la commande est validée
+        playSound('correct', 0.8);
 
         this.emit('game:orderComplete', { 
             earned,
@@ -263,6 +281,12 @@ const Game = {
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
+        }
+
+        // Arrêter la musique du jeu
+        if (this.currentMusic) {
+            stopMusic(this.currentMusic);
+            this.currentMusic = null;
         }
 
         this.emit('game:end', {
@@ -299,6 +323,10 @@ const Game = {
      */
     activateBonus: function(bonusType) {
         console.log('[Game] Bonus activé:', bonusType);
+        
+        // Jouer le son de bonus
+        playSound('bonus', 0.6);
+        
         this.emit('game:bonus', { type: bonusType });
     },
 

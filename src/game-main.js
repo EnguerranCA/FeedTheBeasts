@@ -8,7 +8,7 @@ import { Game } from './core/Game.js';
 import { VRController } from './core/VRController.js';
 import { Camera } from './core/Camera.js';
 import { Loading } from './core/Loading.js';
-import { Audio } from './core/Audio.js';
+import { soundManager } from './core/Sound.js';
 
 // Import des composants
 import { Monster } from './components/monster/monster.js';
@@ -55,7 +55,14 @@ const App = {
         // Initialiser les modules Core
         Camera.init();
         VRController.init();
-        Audio.init();
+        
+        // Initialiser le Sound Manager
+        soundManager.init();
+        
+        // Charger les sons du jeu (async, non-bloquant)
+        this.loadGameSounds().catch(err => {
+            console.warn('Certains sons n\'ont pas pu être chargés, le jeu continuera sans audio.');
+        });
 
         // Initialiser les composants du jeu
         Monster.init();
@@ -71,6 +78,39 @@ const App = {
 
         // Configurer les événements globaux
         this.setupGlobalEvents();
+    },
+
+    /**
+     * Charge tous les sons du jeu
+     */
+    loadGameSounds: async function() {
+        console.log('🎵 Chargement des sons du jeu...');
+        
+        const results = await soundManager.loadSounds([
+            // Effets sonores du jeu
+            { name: 'correct', path: '/assets/sounds/correct.mp3', type: 'sfx' },
+            { name: 'wrong', path: '/assets/sounds/wrong.mp3', type: 'sfx' },
+            { name: 'ding', path: '/assets/sounds/ding.mp3', type: 'sfx' },
+            { name: 'click', path: '/assets/sounds/click.mp3', type: 'sfx' },
+            { name: 'bonus', path: '/assets/sounds/bonus.mp3', type: 'sfx' },
+            { name: 'happening', path: '/assets/sounds/happening.mp3', type: 'sfx' },
+            
+            // Musiques
+            { name: 'menuMusic', path: '/assets/sounds/menu-music.mp3', loop: true, type: 'music' },
+            { name: 'gameMusic', path: '/assets/sounds/game-music.mp3', loop: true, type: 'music' }
+        ]);
+        
+        const successCount = results.filter(r => r.status === 'fulfilled' && r.value === true).length;
+        const totalCount = results.length;
+        
+        if (successCount === 0) {
+            console.warn('⚠️ Aucun son n\'a pu être chargé. Le jeu fonctionnera en mode silencieux.');
+            console.info('💡 Pour ajouter des sons, placez des fichiers MP3 dans public/assets/sounds/');
+        } else if (successCount < totalCount) {
+            console.warn(`⚠️ ${totalCount - successCount} son(s) manquant(s). Le jeu continuera avec les sons disponibles.`);
+        } else {
+            console.log('✅ Tous les sons ont été chargés avec succès !');
+        }
     },
 
     /**
@@ -172,7 +212,7 @@ window.FeedTheBeasts = {
     Game,
     Camera,
     VRController,
-    Audio,
+    soundManager,
     Monster,
     GameObject,
     Bonus,

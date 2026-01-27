@@ -4,7 +4,7 @@
  */
 
 import { Game } from '../../core/Game.js';
-import { Audio } from '../../core/Audio.js';
+import { playSound } from '../../utils/playSound.js';
 
 const GameObject = {
     // Container des objets
@@ -253,8 +253,8 @@ const GameObject = {
     onObjectClicked: function(objectId, element) {
         console.log('[GameObject] Clic sur:', objectId);
         
-        // Jouer un son
-        Audio.play('pickup');
+        // Jouer un son de clic
+        playSound('click', 0.4);
 
         // Vérifier si l'objet est dans la commande
         Game.checkObject(objectId);

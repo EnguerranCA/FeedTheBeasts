@@ -4,7 +4,7 @@
         "name": "Baseball",
         "label": "Baseball",
         "description": "Une balle de baseball usée",
-        "path": "./src/assets/tofind/Baseball.glb",
+        "path": "/assets/tofind/Baseball.glb",
         "scale": 0.2,
         "category": "sport"
     },
@@ -13,7 +13,7 @@
         "name": "Basketball",
         "label": "Basketball",
         "description": "Un ballon de basket",
-        "path": "./src/assets/tofind/Basketball.glb",
+        "path": "/assets/tofind/Basketball.glb",
         "scale": 0.4,
         "category": "sport"
     },
@@ -22,7 +22,7 @@
         "name": "Broom",
         "label": "Balai",
         "description": "Un balai magique peut-être ?",
-        "path": "./src/assets/tofind/Broom.glb",
+        "path": "/assets/tofind/Broom.glb",
         "scale": 0.3,
         "category": "item"
     },
@@ -31,7 +31,7 @@
         "name": "Bus",
         "label": "Bus",
         "description": "Un petit bus miniature",
-        "path": "./src/assets/tofind/Bus.glb",
+        "path": "/assets/tofind/Bus.glb",
         "scale": 0.01,
         "category": "vehicle"
     },
@@ -40,7 +40,7 @@
         "name": "Crab",
         "label": "Crabe",
         "description": "Un crabe croustillant",
-        "path": "./src/assets/tofind/Crab.glb",
+        "path": "/assets/tofind/Crab.glb",
         "scale": 0.02,
         "category": "creature"
     },
@@ -49,7 +49,7 @@
         "name": "Diamond Block",
         "label": "Bloc de Diamant",
         "description": "Un bloc de diamant brillant",
-        "path": "./src/assets/tofind/Diamond Block.glb",
+        "path": "/assets/tofind/Diamond Block.glb",
         "scale": 0.3,
         "category": "treasure"
     },
@@ -58,7 +58,7 @@
         "name": "Egg",
         "label": "OEuf",
         "description": "Un œuf mystérieux",
-        "path": "./src/assets/tofind/Egg.glb",
+        "path": "/assets/tofind/Egg.glb",
         "scale": 0.01,
         "category": "food"
     },
@@ -67,7 +67,7 @@
         "name": "Great Horned Owl",
         "label": "Hibou",
         "description": "Un hibou majestueux",
-        "path": "./src/assets/tofind/Great horned owl.glb",
+        "path": "/assets/tofind/Great horned owl.glb",
         "scale": 0.05,
         "category": "creature"
     },
@@ -76,7 +76,7 @@
         "name": "Moon",
         "label": "Lune",
         "description": "Un morceau de lune",
-        "path": "./src/assets/tofind/Moon.glb",
+        "path": "/assets/tofind/Moon.glb",
         "scale": 0.03,
         "category": "celestial"
     },
@@ -85,7 +85,7 @@
         "name": "Soccer Football",
         "label": "Ballon de Foot",
         "description": "Un ballon de football",
-        "path": "./src/assets/tofind/Simple soccer football.glb",
+        "path": "/assets/tofind/Simple soccer football.glb",
         "scale": 0.3,
         "category": "sport"
     },
@@ -94,7 +94,7 @@
         "name": "Snowman",
         "label": "Bonhomme de Neige",
         "description": "Un bonhomme de neige glacé",
-        "path": "./src/assets/tofind/Snowman.glb",
+        "path": "/assets/tofind/Snowman.glb",
         "scale": 0.5,
         "category": "creature"
     },
@@ -103,7 +103,7 @@
         "name": "Spider",
         "label": "Araignée",
         "description": "Une araignée effrayante",
-        "path": "./src/assets/tofind/Spider.glb",
+        "path": "/assets/tofind/Spider.glb",
         "scale": 0.1,
         "category": "creature"
     },
@@ -112,7 +112,7 @@
         "name": "T-Rex",
         "label": "T-Rex",
         "description": "Un tyrannosaure miniature",
-        "path": "./src/assets/tofind/T-Rex.glb",
+        "path": "/assets/tofind/T-Rex.glb",
         "scale": 0.05,
         "category": "creature"
     },
@@ -121,7 +121,7 @@
         "name": "Table Tennis Paddle",
         "label": "Raquette de Ping-Pong",
         "description": "Une raquette de tennis de table",
-        "path": "./src/assets/tofind/Table Tennis Paddle.glb",
+        "path": "/assets/tofind/Table Tennis Paddle.glb",
         "scale": 0.8,
         "category": "sport"
     },
@@ -130,7 +130,7 @@
         "name": "Taco",
         "label": "Taco",
         "description": "Un taco délicieux",
-        "path": "./src/assets/tofind/Taco.glb",
+        "path": "/assets/tofind/Taco.glb",
         "scale": 0.3,
         "category": "food"
     },
@@ -139,7 +139,7 @@
         "name": "Tennis Ball",
         "label": "Balle de Tennis",
         "description": "Une balle de tennis",
-        "path": "./src/assets/tofind/Tennis ball.glb",
+        "path": "/assets/tofind/Tennis ball.glb",
         "scale": 0.2,
         "category": "sport"
     },
@@ -148,7 +148,7 @@
         "name": "Mouse",
         "label": "Souris",
         "description": "Une petite souris jouet",
-        "path": "./src/assets/tofind/Toy Mouse.glb",
+        "path": "/assets/tofind/Toy Mouse.glb",
         "scale": 0.5,
         "category": "creature"
     }

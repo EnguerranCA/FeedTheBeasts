@@ -4,7 +4,7 @@
  */
 
 import { Game } from '../../core/Game.js';
-import { Audio } from '../../core/Audio.js';
+import { playSound } from '../../utils/playSound.js';
 import { Camera } from '../../core/Camera.js';
 
 const Happenings = {
@@ -132,7 +132,7 @@ const Happenings = {
      * @param {number} duration - Durée en ms
      */
     lightsOff: function(duration) {
-        Audio.play('lightsOff');
+        playSound('happening', 0.5);
 
         // Baisser l'intensité des lumières
         const ambientLight = document.querySelector('a-light[type="ambient"]');
