@@ -190,7 +190,7 @@ const Monster = {
      */
     loadObjectsData: async function() {
         try {
-            const response = await fetch('./src/data/json/objects-3d.json');
+            const response = await fetch('/assets/data/objects-3d.json');
             return await response.json();
         } catch (error) {
             console.error('[Monster] Erreur chargement objets:', error);

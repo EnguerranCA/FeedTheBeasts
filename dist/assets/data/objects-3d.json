@@ -1,0 +1,155 @@
+[
+    {
+        "id": "obj2",
+        "name": "Baseball",
+        "label": "Baseball",
+        "description": "Une balle de baseball usée",
+        "path": "/assets/tofind/Baseball.glb",
+        "scale": 0.2,
+        "category": "sport"
+    },
+    {
+        "id": "obj3",
+        "name": "Basketball",
+        "label": "Basketball",
+        "description": "Un ballon de basket",
+        "path": "/assets/tofind/Basketball.glb",
+        "scale": 0.4,
+        "category": "sport"
+    },
+    {
+        "id": "obj4",
+        "name": "Broom",
+        "label": "Balai",
+        "description": "Un balai magique peut-être ?",
+        "path": "/assets/tofind/Broom.glb",
+        "scale": 0.3,
+        "category": "item"
+    },
+    {
+        "id": "obj5",
+        "name": "Bus",
+        "label": "Bus",
+        "description": "Un petit bus miniature",
+        "path": "/assets/tofind/Bus.glb",
+        "scale": 0.01,
+        "category": "vehicle"
+    },
+    {
+        "id": "obj6",
+        "name": "Crab",
+        "label": "Crabe",
+        "description": "Un crabe croustillant",
+        "path": "/assets/tofind/Crab.glb",
+        "scale": 0.02,
+        "category": "creature"
+    },
+    {
+        "id": "obj7",
+        "name": "Diamond Block",
+        "label": "Bloc de Diamant",
+        "description": "Un bloc de diamant brillant",
+        "path": "/assets/tofind/Diamond Block.glb",
+        "scale": 0.3,
+        "category": "treasure"
+    },
+    {
+        "id": "obj8",
+        "name": "Egg",
+        "label": "OEuf",
+        "description": "Un œuf mystérieux",
+        "path": "/assets/tofind/Egg.glb",
+        "scale": 0.01,
+        "category": "food"
+    },
+    {
+        "id": "obj9",
+        "name": "Great Horned Owl",
+        "label": "Hibou",
+        "description": "Un hibou majestueux",
+        "path": "/assets/tofind/Great horned owl.glb",
+        "scale": 0.05,
+        "category": "creature"
+    },
+    {
+        "id": "obj10",
+        "name": "Moon",
+        "label": "Lune",
+        "description": "Un morceau de lune",
+        "path": "/assets/tofind/Moon.glb",
+        "scale": 0.03,
+        "category": "celestial"
+    },
+    {
+        "id": "obj11",
+        "name": "Soccer Football",
+        "label": "Ballon de Foot",
+        "description": "Un ballon de football",
+        "path": "/assets/tofind/Simple soccer football.glb",
+        "scale": 0.3,
+        "category": "sport"
+    },
+    {
+        "id": "obj12",
+        "name": "Snowman",
+        "label": "Bonhomme de Neige",
+        "description": "Un bonhomme de neige glacé",
+        "path": "/assets/tofind/Snowman.glb",
+        "scale": 0.5,
+        "category": "creature"
+    },
+    {
+        "id": "obj13",
+        "name": "Spider",
+        "label": "Araignée",
+        "description": "Une araignée effrayante",
+        "path": "/assets/tofind/Spider.glb",
+        "scale": 0.1,
+        "category": "creature"
+    },
+    {
+        "id": "obj14",
+        "name": "T-Rex",
+        "label": "T-Rex",
+        "description": "Un tyrannosaure miniature",
+        "path": "/assets/tofind/T-Rex.glb",
+        "scale": 0.05,
+        "category": "creature"
+    },
+    {
+        "id": "obj15",
+        "name": "Table Tennis Paddle",
+        "label": "Raquette de Ping-Pong",
+        "description": "Une raquette de tennis de table",
+        "path": "/assets/tofind/Table Tennis Paddle.glb",
+        "scale": 0.8,
+        "category": "sport"
+    },
+    {
+        "id": "obj16",
+        "name": "Taco",
+        "label": "Taco",
+        "description": "Un taco délicieux",
+        "path": "/assets/tofind/Taco.glb",
+        "scale": 0.3,
+        "category": "food"
+    },
+    {
+        "id": "obj18",
+        "name": "Tennis Ball",
+        "label": "Balle de Tennis",
+        "description": "Une balle de tennis",
+        "path": "/assets/tofind/Tennis ball.glb",
+        "scale": 0.2,
+        "category": "sport"
+    },
+    {
+        "id": "obj19",
+        "name": "Mouse",
+        "label": "Souris",
+        "description": "Une petite souris jouet",
+        "path": "/assets/tofind/Toy Mouse.glb",
+        "scale": 0.5,
+        "category": "creature"
+    }
+]

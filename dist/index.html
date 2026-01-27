@@ -3,457 +3,286 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Let Him Quizz</title>
     <link rel="icon" href="./src/assets/favicon.ico" type="image/x-icon" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./src/assets/favicon/favicon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./src/assets/favicon/favicon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./src/assets/favicon/favicon.png"
-    />
-    <link rel="stylesheet" href="./src/index.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
-      rel="stylesheet"
-    />
-    <script type="module" crossorigin src="./assets/index-BXzkNQk9.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-D1ysZ1b0.css">
+    
+    <!-- A-Frame Core -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    
+    <!-- A-Frame Extras (pour animation-mixer) -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    
+    <title>Feed The Beasts</title>
+    <script type="module" crossorigin src="/assets/index-CjY8n2W2.js"></script>
   </head>
-  <body class="overflow-x-hidden" id="home">
-    <nav
-      class="sticky top-0 z-50 flex flex-row items-center justify-between bg-white p-4"
-    >
-      <h4 class="font-lucky text-3xl text-darckblue">Let Him Quizz</h4>
-      <ul class="flex flex-row items-center gap-10">
-        <li>
-          <a
-            href="#home"
-            class="rounded-lg border-4 border-darckblue px-6 py-2 font-lucky text-darckblue hover:bg-darckblue hover:text-white"
-            >Home</a
-          >
-        </li>
-        <li>
-          <a
-            href="./developement.html"
-            class="rounded-lg border-4 border-darckblue px-6 py-2 font-lucky text-darckblue hover:bg-darckblue hover:text-white"
-            >Code</a
-          >
-        </li>
-        <li>
-          <a
-            href="./game.html"
-            target="_blank"
-            class="rounded-lg border-4 border-darckblue px-6 py-2 font-lucky text-darckblue hover:bg-darckblue hover:text-white"
-            >Game</a
-          >
-        </li>
-      </ul>
-      <a
-        href="#team"
-        class="rounded-lg bg-lightblue p-4 font-lucky text-darckblue hover:bg-darckblue hover:text-white"
-        >Contact Us</a
-      >
-    </nav>
-    <header class="">
-      <div class="relative">
-        <div class="absolute z-20 h-full w-full bg-black bg-opacity-40"></div>
-        <div
-          class="absolute flex h-full w-full flex-col items-end justify-center gap-3 p-10"
-        >
-          <div class="flex w-11/12 flex-row items-end justify-between gap-5">
-            <h1
-              class="z-50 mb-6 w-1/2 text-left font-lucky text-9xl font-bold uppercase text-white"
-            >
-              Let<br />
-              Him<br />
-              Quizz
-            </h1>
-            <a
-              href="./game.html"
-              target="_blank"
-              class="z-30 rounded-md bg-lightblue p-4 font-lucky text-4xl text-white"
-              >Play Now</a
-            >
-          </div>
-          <div class="flex w-11/12 flex-row items-center justify-between">
-            <p class="z-50 text-left font-sans text-xl text-white">
-              Learn English with fun and interactive quizzes
-            </p>
-          </div>
+  <body style="margin: 0; overflow: hidden">
+    <!-- Écran de chargement et menu -->
+    <div id="loading-screen" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    ">
+      <h1 style="font-size: 3rem; margin-bottom: 2rem; color: #e94560;">🍖 Feed The Beasts 👾</h1>
+      
+      <div id="loading-progress" style="display: flex; flex-direction: column; align-items: center;">
+        <div id="loading-text" style="font-size: 1.5rem; margin-bottom: 1rem;">Loading...</div>
+        <div id="progress-bar-container" style="
+          width: 300px;
+          height: 20px;
+          background-color: #0f3460;
+          border-radius: 10px;
+          overflow: hidden;
+        ">
+          <div id="progress-bar" style="
+            width: 0;
+            height: 100%;
+            background-color: #e94560;
+            transition: width 0.3s;
+          "></div>
         </div>
-        <iframe
-          class="w-full"
-          height="1140"
-          src="https://www.youtube.com/embed/5laj9y2nBRs?autoplay=1&controls=0&mute=1&loop=1&modestbranding=1&showinfo=0&rel=0"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
       </div>
-    </header>
-    <main>
-      <section class="mt-56 flex flex-col items-center justify-center">
-        <h2 class="w-full text-center font-lucky text-8xl text-red">
-          Learn English Differently
-        </h2>
-        <div
-          class="relative mt-48 flex w-full flex-col gap-10 bg-red bg-opacity-20 p-20"
-        >
-          <h4 class="text-left font-lucky text-4xl text-red">
-            Learn English Through Culture, Not Just Words
-          </h4>
-          <p class="mt-5 w-2/3 text-left font-sans text-2xl text-darckblue">
-            Forget boring <span class="font-lucky">vocabulary lists</span> and
-            <span class="font-lucky">endless translations</span>! We believe
-            that learning a <span class="font-lucky">language</span> is not just
-            about <span class="font-lucky">memorizing words</span> , but about
-            understanding and using them in context. That’s why our
-            <span>game</span> lets you practice
-            <span class="font-lucky">English</span> through a
-            <span class="font-lucky">general knowledge quiz</span> because the
-            best way to learn is by engaging with real information. <br />
-            <br />
-            With every <span class="font-lucky">question</span> , you’ll
-            discover new <span class="font-lucky">words</span> and
-            <span class="font-lucky">expressions</span> while testing your
-            <span class="font-lucky">knowledge</span> about the
-            <span class="font-lucky">world</span>. You won’t just be learning
-            English you’ll be learning in English!<br />
-            <br />
-            Ready to <span class="font-lucky">level up</span> your
-            <span class="font-lucky">English</span> in a fun way? <br />
-            <br />
-            <span class="font-lucky">Let’s play!</span>
-          </p>
-          <img
-            src="./src/assets/landingpage/presentator.png"
-            alt=""
-            class="absolute -top-36 right-10"
-          />
-        </div>
-      </section>
-      <h1 class="my-80 w-full text-center font-lucky text-9xl text-darckblue">
-        How To Play ?
-      </h1>
-      <section class="my-80 flex flex-col items-center justify-center">
-        <div class="relative m-8 flex w-full flex-row items-center">
-          <img
-            src="./src/assets/landingpage/1.svg"
-            alt=""
-            class="absolute top-0"
-          />
-          <h4 class="ml-80 font-lucky text-8xl text-green">Ticking away</h4>
-        </div>
-        <div
-          class="flex w-full flex-row items-end justify-start gap-20 bg-green bg-opacity-20 p-20"
-        >
-          <p
-            class="ml-80 mt-5 w-2/3 text-left font-sans text-2xl text-darckblue"
-          >
-            Get ready for a
-            <span class="font-lucky">fast-paced</span> challenge! You’ll have
-            <span class="font-lucky">30 seconds</span> to answer as many
-            questions as possible.<br />
-            <br />
-            The catch? They come at you quickly, so you need to
-            <span class="font-lucky">click on the correct answers</span> faster
-            than a speeding bullet!<br />
-            Keep your wits sharp and see how many you can get right before
-            <span class="font-lucky">time runs out.</span><br />
-            <br />
-            <span class="font-lucky">Ready, set, go!</span>
-          </p>
-          <iframe
-            width="968"
-            height="360"
-            src="https://www.youtube.com/embed/5laj9y2nBRs?si=8H5Wnbq-D_qamFhL&amp;clip=Ugkx_9JS7gBl5dDgz52Td40JH6yA8bjWvj8A&amp;clipt=ELFMGNnIAg&autoplay=1&controls=0&loop=1"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </section>
 
-      <section class="my-80 flex flex-col items-center justify-center">
-        <div class="relative m-8 flex w-full flex-row-reverse items-center">
-          <img
-            src="./src/assets/landingpage/2.svg"
-            alt=""
-            class="absolute top-0"
-          />
-          <h4 class="mr-96 font-lucky text-8xl text-purple">Find the place</h4>
-        </div>
-        <div
-          class="flex w-full flex-row items-end justify-start gap-20 bg-purple bg-opacity-20 p-20"
-        >
-          <iframe
-            width="968"
-            height="360"
-            src="https://www.youtube.com/embed/5laj9y2nBRs?si=JfMc58ZMcltIdJ-C&amp;clip=UgkxwhaEvuZ2_vTvmPfOivPjwMEgjvcfeaXt&amp;clipt=EJrUAhiC0wU&autoplay=1&controls=0&loop=1"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-          <p
-            class="mr-80 mt-5 w-2/3 text-left font-sans text-2xl text-darckblue"
-          >
-            Get ready for a
-            <span class="font-lucky">mind-bending visual challenge!</span>
-            <br />
-            <br />
-            A <span class="font-lucky">360° picture</span> will appear around
-            you, and your job is to
-            <span class="font-lucky">guess exactly where you are.</span><br />
-            <br />
-            With <span class="font-lucky">3 rounds</span> to test your
-            knowledge, it's time to see how well you know the
-            <span class="font-lucky">world around you!</span> <br />
-            <br />
-            Don’t worry if you get lost — it's all part of the fun!<br />
-          </p>
-        </div>
-      </section>
+      <div id="start-menu" style="display: none; text-align: center;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 500px;">
+          Nourrissez des monstres avec des objets bizarres !<br>
+          Cliquez sur les objets demandés et placez-les sur le comptoir.
+        </p>
+        
+        <button id="start-button" style="
+          padding: 15px 40px;
+          font-size: 1.5rem;
+          background-color: #e94560;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        " onmouseover="this.style.backgroundColor='#ff5577'" onmouseout="this.style.backgroundColor='#e94560'">
+          🎮 Commencer
+        </button>
 
-      <section class="my-80 flex flex-col items-center justify-center">
-        <div class="flex-row- relative m-8 flex w-full items-center">
-          <img
-            src="./src/assets/landingpage/3.svg"
-            alt=""
-            class="absolute top-0"
-          />
-          <h4 class="ml-80 font-lucky text-8xl text-lightblue">Sort it out</h4>
-        </div>
-        <div
-          class="flex w-full flex-row items-end justify-start gap-20 bg-lightblue bg-opacity-20 p-20"
-        >
-          <p
-            class="ml-80 mt-5 w-2/3 text-left font-sans text-2xl text-darckblue"
-          >
-            Think carefully!<br />
-            <br />
-            <span class="font-lucky">Four boxes</span> and
-            <span class="font-lucky">four cubes</span> will appear in front of
-            you, and a <span class="font-lucky">question</span> will pop up.
-            <br />
-            <br />
-            Your task? <span class="font-lucky">Sort the cubes</span> in the
-            correct order by placing them in the right boxes.<br />
-            <br />
-            Once you think everything is in place, hit the
-            <span class="font-lucky">button</span> to
-            <span class="font-lucky">validate your answer.</span> <br />
-            <br />
-            No rush, but be sure to double-check before you confirm!<br />
-          </p>
-          <iframe
-            width="968"
-            height="360"
-            src="https://www.youtube.com/embed/5laj9y2nBRs?si=vA0vO4gJd1rQ6ivy&amp;clip=UgkxOsCcWikh5QjBKVBpRH3dUUD8dcezvvfz&amp;clipt=EKv5BRiskwk&autoplay=1&controls=0&loop=1"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </section>
+        <div style="margin-top: 2rem;">
+          <label style="font-size: 1.1rem; margin-right: 10px;">Durée:</label>
+          <select id="duration-select" style="
+            padding: 8px;
+            font-size: 1rem;
+            background-color: #0f3460;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-right: 20px;
+          ">
+            <option value="60">1 minute</option>
+            <option value="120" selected>2 minutes</option>
+            <option value="180">3 minutes</option>
+          </select>
 
-      <section class="my-80 flex flex-col items-center justify-center">
-        <div class="relative m-8 flex w-full flex-row-reverse items-center">
-          <img
-            src="./src/assets/landingpage/4.svg"
-            alt=""
-            class="absolute top-0"
-          />
-          <h4 class="mr-96 font-lucky text-8xl text-red">sorry not so rich</h4>
+          <label style="font-size: 1.1rem; margin-right: 10px;">Difficulté:</label>
+          <select id="difficulty-select" style="
+            padding: 8px;
+            font-size: 1rem;
+            background-color: #0f3460;
+            color: white;
+            border: none;
+            border-radius: 5px;
+          ">
+            <option value="easy">Facile</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Difficile</option>
+          </select>
         </div>
-        <div
-          class="flex w-full flex-row items-end justify-start gap-20 bg-red bg-opacity-20 p-20"
+      </div>
+    </div>
+
+    <!-- Scène A-Frame -->
+    <a-scene
+      id="mainScene"
+      loading-screen="enabled: false"
+      raycaster="objects: .clickable"
+    >
+
+      <!-- Assets (modèles 3D, sons, etc.) -->
+      <a-assets>
+        <!-- Les assets seront chargés dynamiquement par le code -->
+      </a-assets>
+
+      <!-- Rig de la caméra (joueur) -->
+      <a-entity id="rig" position="0 0 2">
+        <!-- Caméra principale -->
+        <a-entity 
+          id="camera" 
+          camera 
+          look-controls="pointerLockEnabled: true"
+          position="0 1.6 0"
+        ></a-entity>
+
+        <!-- Contrôleur VR droit (main dominante) -->
+        <a-entity
+          id="rightController"
+          laser-controls="hand: right"
+          raycaster="objects: .clickable; showLine: true; lineColor: #00ff00"
+          oculus-touch-controls="hand: right"
+          vive-controls="hand: right"
+          windows-motion-controls="hand: right"
+        ></a-entity>
+
+        <!-- Contrôleur VR gauche -->
+        <a-entity
+          id="leftController"
+          laser-controls="hand: left"
+          oculus-touch-controls="hand: left"
+          vive-controls="hand: left"
+          windows-motion-controls="hand: left"
+        ></a-entity>
+      </a-entity>
+
+      <!-- Éclairage de la scène -->
+      <a-light type="ambient" color="#ffffff" intensity="0.6"></a-light>
+      <a-light type="directional" color="#ffffff" intensity="0.5" position="3 5 2"></a-light>
+      <a-light type="point" color="#ffddaa" intensity="0.3" position="0 2.5 0"></a-light>
+
+      <!-- Sol -->
+      <a-plane 
+        position="0 0 0" 
+        rotation="-90 0 0" 
+        width="20" 
+        height="20" 
+        color="#3a3a3a"
+        material="roughness: 0.9"
+      ></a-plane>
+
+      <!-- Murs du débarras -->
+      <a-box position="0 2 -5" width="20" height="4" depth="0.2" color="#4a4a4a"></a-box>
+      <a-box position="-10 2 0" width="0.2" height="4" depth="10" color="#4a4a4a"></a-box>
+      <a-box position="10 2 0" width="0.2" height="4" depth="10" color="#4a4a4a"></a-box>
+      <a-box position="0 2 5" width="20" height="4" depth="0.2" color="#4a4a4a"></a-box>
+
+      <!-- Fenêtre des monstres (devant le joueur) -->
+      <a-entity id="monster-window" position="0 1.8 -0.6">
+        <!-- Cadre de la fenêtre -->
+        <a-plane
+          width="1.2"
+          height="1.5"
+          color="#2c2c2c"
+          material="opacity: 0.95"
         >
-          <iframe
-            width="968"
-            height="360"
-            src="https://www.youtube.com/embed/5laj9y2nBRs?autoplay=1&controls=0&loop=1&si=gvfr4usJbue_6Ocp&amp;clip=UgkxyU8Hbbsa7MjnI_WyEGfpHkZM3XewRQWw&amp;clipt=ENCrCRj7-ws"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-          <p
-            class="mr-80 mt-5 w-2/3 text-left font-sans text-2xl text-darckblue"
-          >
-            Now it’s time to test your
-            <span class="font-lucky">strategy!</span> <br />
-            <br />
-            A <span class="font-lucky">question</span> will appear, and you’ll
-            have to decide how much of the
-            <span class="font-lucky">money</span> you’ve earned in
-            <span class="font-lucky">previous rounds</span> you want to risk.<br />
-            <br />
-            Drop your cash onto the
-            <span class="font-lucky">correct trap</span> based on your answer,
-            but be careful if you’re wrong, you lose
-            <span class="font-lucky">everything</span> you bet!<br />
-            <br />
-            Will you play it safe or take a chance for a
-            <span class="font-lucky">bigger prize?</span><br />
-          </p>
-        </div>
-      </section>
-      <h1
-        id="team"
-        class="my-80 w-full text-center font-lucky text-9xl text-darckblue"
+        </a-plane>
+
+        <!-- Zone du monstre (centre de la fenêtre) -->
+        <a-entity id="current-monster" position="0 -0.2 0.05">
+          <!-- Monstre exemple visible immédiatement -->
+          <a-sphere radius="0.3" color="#4CAF50" position="0 0 0"></a-sphere>
+          <a-sphere radius="0.1" color="#ffffff" position="-0.12 0.12 0.25">
+            <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
+          </a-sphere>
+          <a-sphere radius="0.1" color="#ffffff" position="0.12 0.12 0.25">
+            <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
+          </a-sphere>
+        </a-entity>
+
+        <!-- Bulle de dialogue AU-DESSUS du monstre -->
+        <a-entity id="speech-bubble" position="0 0.5 0.1" visible="true" class="clickable" opacity="1">
+          <!-- Fond de la bulle -->
+          <a-plane
+            width="1"
+            height="0.6"
+            color="#ffffff"
+            material="opacity: 0.95; side: double"
+          ></a-plane>
+          
+          <!-- Texte de la demande -->
+          <a-text
+            id="monster-request"
+            value="Je veux:\n- Pomme pourrie\n- Chaussette usée"
+            align="center"
+            position="0 0 0.02"
+            width="0.9"
+            color="#000000"
+            wrap-count="20"
+          ></a-text>
+
+          <!-- Petit triangle pointer vers le bas -->
+          <a-cone 
+            position="0 -0.35 0" 
+            radius-bottom="0.08" 
+            radius-top="0" 
+            height="0.1" 
+            color="#ffffff"
+            rotation="0 0 0"
+          ></a-cone>
+        </a-entity>
+      </a-entity>
+
+      <!-- Comptoir (où déposer les objets) -->
+      <a-box
+        id="counter"
+        position="0 0.9 0"
+        width="1.5"
+        height="0.1"
+        depth="0.5"
+        color="#8B4513"
+        material="roughness: 0.8"
       >
-        Here is our team !
-      </h1>
-      <section class="flex w-full flex-row justify-center gap-24">
-        <div
-          class="flex w-1/5 flex-col gap-10 rounded-lg border-8 border-darckblue p-8 shadow-shadowred"
-        >
-          <img
-            src="./src/assets/landingpage/enguerran.png"
-            alt=""
-            class="rounded-lg"
-          />
-          <h5 class="font-lucky text-3xl text-darckblue">
-            Enguerran<br />
-            Caro--Alquier
-          </h5>
-          <ul class="text-xl">
-            <li>- Ticking away</li>
-            <li>- Find the place</li>
-            <li>- Menu</li>
-            <li>- Rounds</li>
-            <li>- Keyboard</li>
-            <li>- Leaderboard</li>
-          </ul>
-          <div class="flex w-full flex-row justify-between">
-            <a href="https://www.instagram.com/engue_ca/">
-              <img src="./src/assets/landingpage/insta.svg" alt="" /> </a
-            ><a href="https://github.com/EnguerranCA">
-              <img src="./src/assets/landingpage/git.svg" alt="" /> </a
-            ><a
-              href="https://www.linkedin.com/in/enguerran-caro-alquier/?locale=fr_FR"
-            >
-              <img src="./src/assets/landingpage/linkedin.svg" alt="" />
-            </a>
-          </div>
-        </div>
+        <!-- Conteneur pour les objets collectés sur le comptoir -->
+        <a-entity id="counter-items" position="0 0.1 0"></a-entity>
+      </a-box>
 
-        <div
-          class="flex w-1/5 flex-col gap-10 rounded-lg border-8 border-darckblue p-8 shadow-shadowgreen"
-        >
-          <img
-            src="./src/assets/landingpage/brad.png"
-            alt=""
-            class="rounded-lg"
-          />
-          <h5 class="font-lucky text-3xl text-darckblue">
-            Brad<br />
-            Savary
-          </h5>
-          <ul class="text-xl">
-            <li>- Data base</li>
-            <li>- API</li>
-            <li>- Sorry not so rich</li>
-            <li>- Sounds</li>
-            <li>- Readme</li>
-            <li>- Content for the site</li>
-          </ul>
-          <div class="flex w-full flex-row justify-between">
-            <a href="https://www.instagram.com/brad.svr/">
-              <img src="./src/assets/landingpage/insta.svg" alt="" /> </a
-            ><a href="https://github.com/BradSavary">
-              <img src="./src/assets/landingpage/git.svg" alt="" /> </a
-            ><a
-              href="https://www.linkedin.com/in/brad-savary-07322b294/?originalSubdomain=fr"
-            >
-              <img src="./src/assets/landingpage/linkedin.svg" alt="" />
-            </a>
-          </div>
-        </div>
+      <!-- Conteneur pour les objets du débarras -->
+      <a-entity id="objects-container"></a-entity>
 
-        <div
-          class="flex w-1/5 flex-col gap-10 rounded-lg border-8 border-darckblue p-8 shadow-shadowblue"
-        >
-          <img
-            src="./src/assets/landingpage/bastien.png"
-            alt=""
-            class="rounded-lg"
-          />
-          <h5 class="font-lucky text-3xl text-darckblue">
-            Bastien<br />
-            Guitard
-          </h5>
-          <ul class="text-xl">
-            <li>- Scene</li>
-            <li>- Sort It out</li>
-            <li>- VR Comptability</li>
-            <li>- Designed the 2 sites</li>
-            <li>- Developed the landing page</li>
-            <li>- Developed the documentation</li>
-          </ul>
-          <div class="flex w-full flex-row justify-between">
-            <a href="https://www.instagram.com/bastien.g_/">
-              <img src="./src/assets/landingpage/insta.svg" alt="" /> </a
-            ><a href="https://github.com/bastienggg">
-              <img src="./src/assets/landingpage/git.svg" alt="" /> </a
-            ><a
-              href="https://www.linkedin.com/in/bastien-guitard-30585329b/?originalSubdomain=fr"
-            >
-              <img src="./src/assets/landingpage/linkedin.svg" alt="" />
-            </a>
-          </div>
-        </div>
-      </section>
+      <!-- Conteneur pour les bonus (oiseaux/vif d'or) -->
+      <a-entity id="bonus-container"></a-entity>
 
-      <section
-        class="justify-left relative mt-80 flex flex-row items-center bg-lightblue bg-opacity-20 p-20"
+      <!-- UI - Panneau de score -->
+      <a-plane
+        id="ui-panel"
+        position="-1.5 2 0.5"
+        rotation="0 45 0"
+        width="0.6"
+        height="0.8"
+        color="#1a1a2e"
+        material="opacity: 0.9"
       >
-        <div class="flex w-2/3 flex-col gap-20">
-          <h5 class="font-lucky text-5xl text-darckblue">
-            Do you want to know more about the game's development?
-          </h5>
-          <a
-            href="./developement.html"
-            class="w-fit rounded-lg bg-lightblue p-6 font-lucky text-3xl"
-            >Right this way!</a
-          >
-          <img
-            src="./src/assets/landingpage/chiken.png"
-            alt=""
-            class="absolute -top-40 right-8"
-          />
-        </div>
-      </section>
-    </main>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
+        <a-text
+          id="score-text"
+          value="$0"
+          align="center"
+          position="0 0.25 0.01"
+          color="#e94560"
+          width="1.2"
+        ></a-text>
+        <a-text
+          id="timer-text"
+          value="00:00"
+          align="center"
+          position="0 0 0.01"
+          color="#ffffff"
+          width="1"
+        ></a-text>
+        <a-text
+          id="order-text"
+          value="Order #1"
+          align="center"
+          position="0 -0.25 0.01"
+          color="#16213e"
+          width="0.8"
+        ></a-text>
+      </a-plane>
 
-      nav ul li.active a {
-        font-weight: bold;
-        text-decoration: underline;
-      }
-    </style>
+      <!-- Ciel -->
+      <a-sky color="#1a1a2e"></a-sky>
+
+    </a-scene>
+
+    <!-- Script principal du jeu -->
   </body>
 </html>

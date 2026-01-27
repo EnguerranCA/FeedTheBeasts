@@ -17,10 +17,6 @@ export function playSound(soundName, volume = 0.5) {
         const soundPaths = {
             'correct': '/assets/sounds/correct-sound.mp3',
             'wrong': '/assets/sounds/wrong-sound.mp3',
-            'ding': '/assets/sounds/ding.mp3',
-            'click': '/assets/sounds/click.mp3',
-            'bonus': '/assets/sounds/bonus.mp3',
-            'happening': '/assets/sounds/happening.mp3'
         };
         
         // Vérifier que le son existe

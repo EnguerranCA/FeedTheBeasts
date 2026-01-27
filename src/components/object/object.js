@@ -124,7 +124,7 @@ const GameObject = {
      */
     loadObjectsData: async function() {
         try {
-            const response = await fetch('./src/data/json/objects-3d.json');
+            const response = await fetch('/assets/data/objects-3d.json');
             return await response.json();
         } catch (error) {
             console.error('[GameObject] Erreur chargement:', error);
@@ -139,25 +139,25 @@ const GameObject = {
      */
     getDefaultObjects: function() {
         return [
-            { id: 'obj1', name: 'Baby Chick', label: 'Poussin', path: './src/assets/tofind/Baby chick.glb', scale: 0.5 },
-            { id: 'obj2', name: 'Baseball', label: 'Baseball', path: './src/assets/tofind/Baseball.glb', scale: 0.3 },
-            { id: 'obj3', name: 'Basketball', label: 'Basketball', path: './src/assets/tofind/Basketball.glb', scale: 0.4 },
-            { id: 'obj4', name: 'Broom', label: 'Balai', path: './src/assets/tofind/Broom.glb', scale: 0.6 },
-            { id: 'obj5', name: 'Bus', label: 'Bus', path: './src/assets/tofind/Bus.glb', scale: 0.5 },
-            { id: 'obj6', name: 'Crab', label: 'Crabe', path: './src/assets/tofind/Crab.glb', scale: 0.4 },
-            { id: 'obj7', name: 'Diamond Block', label: 'Bloc de Diamant', path: './src/assets/tofind/Diamond Block.glb', scale: 0.3 },
-            { id: 'obj8', name: 'Egg', label: 'Œuf', path: './src/assets/tofind/Egg.glb', scale: 0.3 },
-            { id: 'obj9', name: 'Great Horned Owl', label: 'Hibou', path: './src/assets/tofind/Great horned owl.glb', scale: 0.5 },
-            { id: 'obj10', name: 'Moon', label: 'Lune', path: './src/assets/tofind/Moon.glb', scale: 0.4 },
-            { id: 'obj11', name: 'Soccer Football', label: 'Ballon de Foot', path: './src/assets/tofind/Simple soccer football.glb', scale: 0.3 },
-            { id: 'obj12', name: 'Snowman', label: 'Bonhomme de Neige', path: './src/assets/tofind/Snowman.glb', scale: 0.5 },
-            { id: 'obj13', name: 'Spider', label: 'Araignée', path: './src/assets/tofind/Spider.glb', scale: 0.4 },
-            { id: 'obj14', name: 'T-Rex', label: 'T-Rex', path: './src/assets/tofind/T-Rex.glb', scale: 0.5 },
-            { id: 'obj15', name: 'Table Tennis Paddle', label: 'Raquette de Ping-Pong', path: './src/assets/tofind/Table Tennis Paddle.glb', scale: 0.4 },
-            { id: 'obj16', name: 'Taco', label: 'Taco', path: './src/assets/tofind/Taco.glb', scale: 0.3 },
-            { id: 'obj17', name: 'Tambourine', label: 'Tambourin', path: './src/assets/tofind/Tambourine.glb', scale: 0.4 },
-            { id: 'obj18', name: 'Tennis Ball', label: 'Balle de Tennis', path: './src/assets/tofind/Tennis ball.glb', scale: 0.2 },
-            { id: 'obj19', name: 'Toy Mouse', label: 'Souris Jouet', path: './src/assets/tofind/Toy Mouse.glb', scale: 0.3 }
+            { id: 'obj1', name: 'Baby Chick', label: 'Poussin', path: '/assets/tofind/Baby chick.glb', scale: 0.5 },
+            { id: 'obj2', name: 'Baseball', label: 'Baseball', path: '/assets/tofind/Baseball.glb', scale: 0.3 },
+            { id: 'obj3', name: 'Basketball', label: 'Basketball', path: '/assets/tofind/Basketball.glb', scale: 0.4 },
+            { id: 'obj4', name: 'Broom', label: 'Balai', path: '/assets/tofind/Broom.glb', scale: 0.6 },
+            { id: 'obj5', name: 'Bus', label: 'Bus', path: '/assets/tofind/Bus.glb', scale: 0.5 },
+            { id: 'obj6', name: 'Crab', label: 'Crabe', path: '/assets/tofind/Crab.glb', scale: 0.4 },
+            { id: 'obj7', name: 'Diamond Block', label: 'Bloc de Diamant', path: '/assets/tofind/Diamond Block.glb', scale: 0.3 },
+            { id: 'obj8', name: 'Egg', label: 'Œuf', path: '/assets/tofind/Egg.glb', scale: 0.3 },
+            { id: 'obj9', name: 'Great Horned Owl', label: 'Hibou', path: '/assets/tofind/Great horned owl.glb', scale: 0.5 },
+            { id: 'obj10', name: 'Moon', label: 'Lune', path: '/assets/tofind/Moon.glb', scale: 0.4 },
+            { id: 'obj11', name: 'Soccer Football', label: 'Ballon de Foot', path: '/assets/tofind/Simple soccer football.glb', scale: 0.3 },
+            { id: 'obj12', name: 'Snowman', label: 'Bonhomme de Neige', path: '/assets/tofind/Snowman.glb', scale: 0.5 },
+            { id: 'obj13', name: 'Spider', label: 'Araignée', path: '/assets/tofind/Spider.glb', scale: 0.4 },
+            { id: 'obj14', name: 'T-Rex', label: 'T-Rex', path: '/assets/tofind/T-Rex.glb', scale: 0.5 },
+            { id: 'obj15', name: 'Table Tennis Paddle', label: 'Raquette de Ping-Pong', path: '/assets/tofind/Table Tennis Paddle.glb', scale: 0.4 },
+            { id: 'obj16', name: 'Taco', label: 'Taco', path: '/assets/tofind/Taco.glb', scale: 0.3 },
+            { id: 'obj17', name: 'Tambourine', label: 'Tambourin', path: '/assets/tofind/Tambourine.glb', scale: 0.4 },
+            { id: 'obj18', name: 'Tennis Ball', label: 'Balle de Tennis', path: '/assets/tofind/Tennis ball.glb', scale: 0.2 },
+            { id: 'obj19', name: 'Toy Mouse', label: 'Souris Jouet', path: '/assets/tofind/Toy Mouse.glb', scale: 0.3 }
         ];
     },
 
