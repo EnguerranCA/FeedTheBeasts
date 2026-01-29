@@ -17,13 +17,11 @@ const Monster = {
     speechBubble: null,
     requestText: null,
 
-    // Liste des types de monstres (à compléter avec vos modèles)
+    // Liste des types de monstres avec leurs modèles 3D
     types: [
-        { id: 'monster1', name: 'Gobelin Gourmand', color: '#4CAF50' },
-        { id: 'monster2', name: 'Cyclope Affamé', color: '#9C27B0' },
-        { id: 'monster3', name: 'Dragon Grignoteur', color: '#F44336' },
-        { id: 'monster4', name: 'Blob Vorace', color: '#2196F3' },
-        { id: 'monster5', name: 'Fantôme Famélique', color: '#607D8B' }
+        { id: 'monster1', name: 'Blue Demon', model: './public/assets/monsters/Blue_Demon.glb' },
+        { id: 'monster2', name: 'Dragon Evolved', model: './public/assets/monsters/Dragon_Evolved.glb' },
+        { id: 'monster3', name: 'Orc', model: './public/assets/monsters/Orc.glb' }
     ],
 
     /**
@@ -123,32 +121,29 @@ const Monster = {
             return;
         }
 
-        // Créer le nouveau monstre (placeholder - remplacer par votre modèle 3D)
+        // Créer le nouveau monstre avec modèle 3D GLB
         const monsterEntity = document.createElement('a-entity');
         monsterEntity.id = 'monster-model';
         
-        // Pour l'instant, utiliser une forme simple
-        monsterEntity.innerHTML = `
-            <a-sphere radius="0.3" color="${monsterType.color}" position="0 0 0"></a-sphere>
-            <a-sphere radius="0.1" color="#ffffff" position="-0.12 0.12 0.25">
-                <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
-            </a-sphere>
-            <a-sphere radius="0.1" color="#ffffff" position="0.12 0.12 0.25">
-                <a-sphere radius="0.05" color="#000000" position="0 0 0.05"></a-sphere>
-            </a-sphere>
-        `;
+        // Utiliser le modèle 3D GLB avec animation idle
+        monsterEntity.setAttribute('gltf-model', monsterType.model);
+        monsterEntity.setAttribute('animation-mixer', 'clip: Idle; loop: repeat');
+        monsterEntity.setAttribute('rotation', '0 0 0');
+        monsterEntity.setAttribute('scale', '2 2 2');
 
-        // Animation d'entrée
-        monsterEntity.setAttribute('position', '0 -0.5 0');
+
+        // Animation d'entrée (position finale: 0 -1.629 -4.518)
+        monsterEntity.setAttribute('position', '0 -1.629 -4.518');
         monsterEntity.setAttribute('animation', {
             property: 'position',
-            to: '0 0 0',
+            to: '0 -1.629 -4.518',
             dur: 500,
             easing: 'easeOutBack'
         });
+        
 
         this.container.appendChild(monsterEntity);
-        console.log('[Monster] Monstre ajouté au DOM');
+        console.log('[Monster] Monstre 3D ajouté:', monsterType.name);
 
         // Générer la commande
         await this.generateOrder(orderData.size);

@@ -9,62 +9,42 @@ import { playSound } from '../../utils/playSound.js';
 const GameObject = {
     // Container des objets
     container: null,
-    
+
     // Liste des objets actuellement dans le jeu
     activeObjects: [],
-    
+
     // Configuration
     config: {
-        objectCount: 20,
+        objectCount: 7,
         // Liste des positions prédéfinies pour les objets (autour du joueur, évitant la zone du monstre)
         positions: [
             // Mur gauche (X négatif)
-            { x: -3, y: 1.2, z: -2 },
-            { x: -3, y: 2.0, z: -1 },
-            { x: -3, y: 1.5, z: 0 },
-            { x: -3, y: 2.2, z: 1 },
-            { x: -3, y: 1.8, z: 2 },
-            
-            // Mur arrière (Z positif - derrière le joueur)
-            { x: -2, y: 1.5, z: 3 },
-            { x: -1, y: 2.0, z: 3 },
-            { x: 0, y: 1.3, z: 3 },
-            { x: 1, y: 2.2, z: 3 },
-            { x: 2, y: 1.8, z: 3 },
-            
-            // Mur droit (X positif)
-            { x: 3.5, y: 1.4, z: 2 },
-            { x: 3.5, y: 2.0, z: 1 },
-            { x: 3.5, y: 1.7, z: 0 },
-            { x: 3.5, y: 2.3, z: -1 },
-            { x: 3.5, y: 1.5, z: -2 },
-            
-            // Coins et positions intermédiaires
-            { x: -2.5, y: 1.6, z: 2.5 },  // Coin arrière gauche
-            { x: 2.5, y: 1.9, z: 2.5 },   // Coin arrière droit
-            { x: -2.5, y: 2.1, z: -2.5 }, // Coin avant gauche
-            { x: 2.5, y: 1.4, z: -2.5 },  // Coin avant droit
-            
-            // Position basse centrale
-            { x: 0, y: 0.8, z: 2 }
+            { x: -2.139, y: 0.412 , z: -1.035 },
+            { x: -0.3, y: 0.412 , z: -1.035 },
+            { x: 1.532, y: 0.412, z: -1.035 },
+            { x: 3.309, y: 0.412, z: -1.035 },
+            { x: -3.942, y: 0.325, z: 4.370 },
+            { x: -2.473, y: 0.024, z: 4.520 },
+            { x: 3.500, y: -0.287, z: 2.608 },
+
         ]
     },
 
     /**
      * Initialise le module Object
      */
-    init: function() {
+    init: function () {
         console.log('[GameObject] Initialisation...');
-        
+
         this.container = document.querySelector('#objects-container');
-        
+
         this.setupEventListeners();
     },
 
     /**
      * Configure les écouteurs d'événements
      */
-    setupEventListeners: function() {
+    setupEventListeners: function () {
         // Événement de clic sur un objet
         document.addEventListener('object:click', (e) => {
             if (e.detail.type === 'object') {
@@ -102,15 +82,21 @@ const GameObject = {
     /**
      * Charge et spawn tous les objets
      */
-    spawnObjects: async function() {
+    spawnObjects: async function () {
         // Nettoyer les objets existants
         this.clearObjects();
-        
+
         // Mélanger les positions au début de la partie
         this.shuffleAllPositions();
 
         // Charger les données des objets
-        const objectsData = await this.loadObjectsData();
+        const allObjectsData = await this.loadObjectsData();
+        
+        // Sélectionner 7 objets aléatoires pour cette partie
+        const shuffledObjects = [...allObjectsData].sort(() => Math.random() - 0.5);
+        const objectsData = shuffledObjects.slice(0, this.config.objectCount);
+        
+        console.log('[GameObject] Objets sélectionnés pour cette partie:', objectsData.map(o => o.name));
 
         // Spawner chaque objet
         objectsData.forEach((objData, index) => {
@@ -122,7 +108,7 @@ const GameObject = {
      * Charge les données des objets depuis le JSON
      * @returns {Promise<Array>}
      */
-    loadObjectsData: async function() {
+    loadObjectsData: async function () {
         try {
             const response = await fetch('/assets/data/objects-3d.json');
             return await response.json();
@@ -137,7 +123,7 @@ const GameObject = {
      * Retourne des objets par défaut pour le développement
      * @returns {Array}
      */
-    getDefaultObjects: function() {
+    getDefaultObjects: function () {
         return [
             { id: 'obj1', name: 'Baby Chick', label: 'Poussin', path: '/assets/tofind/Baby chick.glb', scale: 0.5 },
             { id: 'obj2', name: 'Baseball', label: 'Baseball', path: '/assets/tofind/Baseball.glb', scale: 0.3 },
@@ -166,7 +152,7 @@ const GameObject = {
      * @param {object} objData - Données de l'objet
      * @param {number} index - Index pour le positionnement
      */
-    spawnObject: function(objData, index) {
+    spawnObject: function (objData, index) {
         // Calculer une position aléatoire
         const position = this.getRandomPosition();
 
@@ -179,10 +165,10 @@ const GameObject = {
 
         // Utiliser le modèle 3D GLB
         const scale = objData.scale || 0.3;
-        
+
         // Appliquer le scale sur l'entité parente pour que le hover fonctionne correctement
         entity.setAttribute('scale', `${scale} ${scale} ${scale}`);
-        
+
         entity.innerHTML = `
             <a-entity 
                 gltf-model="${objData.path}"
@@ -219,7 +205,7 @@ const GameObject = {
     /**
      * Mélange les positions au début de chaque partie
      */
-    shuffleAllPositions: function() {
+    shuffleAllPositions: function () {
         // Créer une copie et mélanger
         this.shuffledPositions = [...this.config.positions].sort(() => Math.random() - 0.5);
         this.positionIndex = 0;
@@ -229,7 +215,7 @@ const GameObject = {
      * Obtient la prochaine position de la liste mélangée
      * @returns {object} Position {x, y, z}
      */
-    getNextPosition: function() {
+    getNextPosition: function () {
         if (this.shuffledPositions.length === 0 || this.positionIndex >= this.shuffledPositions.length) {
             // Si on n'a pas encore mélangé ou si on a utilisé toutes les positions
             this.shuffleAllPositions();
@@ -241,7 +227,7 @@ const GameObject = {
      * Retourne une position pour un objet (utilise les positions prédéfinies)
      * @returns {object} Position {x, y, z}
      */
-    getRandomPosition: function() {
+    getRandomPosition: function () {
         return this.getNextPosition();
     },
 
@@ -250,9 +236,9 @@ const GameObject = {
      * @param {string} objectId - ID de l'objet cliqué
      * @param {Element} element - Élément DOM
      */
-    onObjectClicked: function(objectId, element) {
+    onObjectClicked: function (objectId, element) {
         console.log('[GameObject] Clic sur:', objectId);
-        
+
         // Jouer un son de clic
         playSound('click', 0.4);
 
@@ -264,7 +250,7 @@ const GameObject = {
      * Déplace un objet vers le comptoir
      * @param {string} objectId - ID de l'objet
      */
-    moveToCounter: function(objectId) {
+    moveToCounter: function (objectId) {
         const objData = this.activeObjects.find(obj => obj.id === objectId);
         if (!objData) return;
 
@@ -291,10 +277,10 @@ const GameObject = {
         setTimeout(() => {
             // Déplacer dans le container du comptoir
             counterItems.appendChild(element);
-            
+
             // Position relative dans le container
             element.setAttribute('position', `${targetPos.x} ${targetPos.y} ${targetPos.z}`);
-            
+
             // Réduire la taille pour le comptoir (mais sauvegarder l'original)
             element.setAttribute('scale', '0.7 0.7 0.7');
         }, 500);
@@ -306,11 +292,11 @@ const GameObject = {
     /**
      * Mélange les positions des objets
      */
-    shufflePositions: function() {
+    shufflePositions: function () {
         this.activeObjects.forEach(obj => {
             const newPos = this.getRandomPosition();
             obj.position = newPos;
-            
+
             obj.element.setAttribute('animation', {
                 property: 'position',
                 to: `${newPos.x} ${newPos.y} ${newPos.z}`,
@@ -324,26 +310,26 @@ const GameObject = {
      * Réinitialise les objets pour une nouvelle commande
      * Récupère les objets du comptoir et les remet dans le jeu
      */
-    resetObjectsForNewOrder: function() {
+    resetObjectsForNewOrder: function () {
         // Récupérer les objets qui sont sur le comptoir
         const counterItems = document.querySelector('#counter-items');
         if (counterItems) {
             const collectedObjects = Array.from(counterItems.children);
-            
+
             collectedObjects.forEach(element => {
                 // Restaurer le scale original
                 const originalScale = element.getAttribute('data-original-scale');
                 if (originalScale) {
                     element.setAttribute('scale', originalScale);
                 }
-                
+
                 // Remettre l'objet dans le container principal
                 this.container.appendChild(element);
-                
+
                 // Récupérer les données de l'objet
                 const objectId = element.dataset.objectId;
                 const objectData = element.dataset;
-                
+
                 // Ajouter à la liste active si pas déjà présent
                 if (!this.activeObjects.find(obj => obj.id === objectId)) {
                     this.activeObjects.push({
@@ -360,7 +346,7 @@ const GameObject = {
                 }
             });
         }
-        
+
         // Maintenant mélanger les positions de TOUS les objets
         this.shufflePositions();
     },
@@ -368,16 +354,16 @@ const GameObject = {
     /**
      * Met en surbrillance les objets de la commande
      */
-    highlightOrderObjects: function() {
+    highlightOrderObjects: function () {
         const orderIds = Game.state.currentOrder;
-        
+
         this.activeObjects.forEach(obj => {
             if (orderIds.includes(obj.id)) {
                 // Récupérer le scale original de l'entité parente
                 const originalScale = obj.element.getAttribute('data-original-scale');
                 const scaleValue = parseFloat(originalScale.split(' ')[0]);
                 const targetScale = scaleValue * 1.3;
-                
+
                 obj.element.setAttribute('animation__glow', {
                     property: 'scale',
                     from: `${scaleValue} ${scaleValue} ${scaleValue}`,
@@ -398,7 +384,7 @@ const GameObject = {
     /**
      * Arrête la surbrillance
      */
-    clearHighlight: function() {
+    clearHighlight: function () {
         this.activeObjects.forEach(obj => {
             obj.element.removeAttribute('animation__glow');
             // Restaurer le scale original
@@ -412,16 +398,16 @@ const GameObject = {
     /**
      * Agrandit les objets de la commande
      */
-    enlargeOrderObjects: function() {
+    enlargeOrderObjects: function () {
         const orderIds = Game.state.currentOrder;
-        
+
         this.activeObjects.forEach(obj => {
             if (orderIds.includes(obj.id)) {
                 // Récupérer le scale original et l'agrandir de 50%
                 const originalScale = obj.element.getAttribute('data-original-scale');
                 const scaleValue = parseFloat(originalScale.split(' ')[0]);
                 const targetScale = scaleValue * 1.5;
-                
+
                 obj.element.setAttribute('animation__scale', {
                     property: 'scale',
                     to: `${targetScale} ${targetScale} ${targetScale}`,
@@ -444,9 +430,9 @@ const GameObject = {
     /**
      * Cache les objets qui ne sont pas dans la commande
      */
-    hideWrongObjects: function() {
+    hideWrongObjects: function () {
         const orderIds = Game.state.currentOrder;
-        
+
         this.activeObjects.forEach(obj => {
             if (!orderIds.includes(obj.id)) {
                 obj.element.setAttribute('visible', 'false');
@@ -464,7 +450,7 @@ const GameObject = {
     /**
      * Supprime tous les objets
      */
-    clearObjects: function() {
+    clearObjects: function () {
         if (this.container) {
             this.container.innerHTML = '';
         }
