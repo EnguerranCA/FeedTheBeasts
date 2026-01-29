@@ -165,6 +165,9 @@ const GameObject = {
 
         // Utiliser le modèle 3D GLB
         const scale = objData.scale || 0.3;
+        
+        // Offset Y pour les modèles dont le pivot n'est pas à la base
+        const yOffset = objData.yOffset || 0;
 
         // Appliquer le scale sur l'entité parente pour que le hover fonctionne correctement
         entity.setAttribute('scale', `${scale} ${scale} ${scale}`);
@@ -172,6 +175,7 @@ const GameObject = {
         entity.innerHTML = `
             <a-entity 
                 gltf-model="${objData.path}"
+                position="0 ${yOffset} 0"
                 class="interactable clickable"
             ></a-entity>
         `;

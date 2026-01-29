@@ -5,8 +5,7 @@
         "label": "Baseball",
         "description": "Une balle de baseball usée",
         "path": "/assets/tofind/Baseball.glb",
-        "scale": 1,
-        "category": "sport"
+        "scale": 1,        "yOffset": 0.5,        "category": "sport"
     },
     {
         "id": "obj3",
@@ -15,6 +14,7 @@
         "description": "Un ballon de basket",
         "path": "/assets/tofind/Basketball.glb",
         "scale": 0.4,
+        "yOffset": 0.5,
         "category": "sport"
     },
     {
@@ -87,6 +87,7 @@
         "description": "Un ballon de football",
         "path": "/assets/tofind/Simple soccer football.glb",
         "scale": 0.3,
+        "yOffset": 0.5,
         "category": "sport"
     },
     {
@@ -95,8 +96,7 @@
         "label": "Bonhomme de Neige",
         "description": "Un bonhomme de neige glacé",
         "path": "/assets/tofind/Snowman.glb",
-        "scale": 1.0,
-        "category": "creature"
+        "scale": 1.0,        "yOffset": 1.0,        "category": "creature"
     },
     {
         "id": "obj13",
@@ -140,8 +140,7 @@
         "label": "Balle de Tennis",
         "description": "Une balle de tennis",
         "path": "/assets/tofind/Tennis ball.glb",
-        "scale": 4.0,
-        "category": "sport"
+        "scale": 4.0,        "yOffset": 0.5,        "category": "sport"
     },
     {
         "id": "obj19",
