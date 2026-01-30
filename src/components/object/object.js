@@ -19,8 +19,8 @@ const GameObject = {
         // Liste des positions prédéfinies pour les objets (autour du joueur, évitant la zone du monstre)
         positions: [
             // Mur gauche (X négatif)
-            { x: -2.139, y: 0.412 , z: -1.035 },
-            { x: -0.3, y: 0.412 , z: -1.035 },
+            { x: -2.139, y: 0.412, z: -1.035 },
+            { x: -0.3, y: 0.412, z: -1.035 },
             { x: 1.532, y: 0.412, z: -1.035 },
             { x: 3.309, y: 0.412, z: -1.035 },
             { x: -3.942, y: 0.325, z: 4.370 },
@@ -91,12 +91,12 @@ const GameObject = {
 
         // Charger les données des objets
         const allObjectsData = await this.loadObjectsData();
-        
+
         // Sélectionner uniquement le nombre d'objets correspondant aux positions disponibles
         const maxObjects = Math.min(this.config.objectCount, this.config.positions.length);
         const shuffledObjects = [...allObjectsData].sort(() => Math.random() - 0.5);
         const objectsData = shuffledObjects.slice(0, maxObjects);
-        
+
         console.log('[GameObject] Objets sélectionnés pour cette partie:', objectsData.map(o => o.name));
 
         // Spawner chaque objet
@@ -172,7 +172,7 @@ const GameObject = {
 
         // Utiliser le modèle 3D GLB
         const scale = objData.scale || 0.3;
-        
+
         // Offset Y pour les modèles dont le pivot n'est pas à la base
         const yOffset = objData.yOffset || 0;
 
@@ -321,45 +321,50 @@ const GameObject = {
      * Réinitialise les objets pour une nouvelle commande
      * Récupère les objets du comptoir et les remet dans le jeu
      */
-    resetObjectsForNewOrder: function () {
+    resetObjectsForNewOrder: async function () {
+        console.log('[GameObject] Réinitialisation pour nouvelle commande');
+
         // Récupérer les objets qui sont sur le comptoir
         const counterItems = document.querySelector('#counter-items');
-        if (counterItems) {
+        const collectedCount = counterItems ? counterItems.children.length : 0;
+
+        if (counterItems && collectedCount > 0) {
             const collectedObjects = Array.from(counterItems.children);
+            console.log('[GameObject] Objets collectés à remplacer:', collectedCount);
 
+            // Supprimer les objets collectés
             collectedObjects.forEach(element => {
-                // Restaurer le scale original
-                const originalScale = element.getAttribute('data-original-scale');
-                if (originalScale) {
-                    element.setAttribute('scale', originalScale);
-                }
-
-                // Remettre l'objet dans le container principal
-                this.container.appendChild(element);
-
-                // Récupérer les données de l'objet
-                const objectId = element.dataset.objectId;
-                const objectData = element.dataset;
-
-                // Ajouter à la liste active si pas déjà présent
-                if (!this.activeObjects.find(obj => obj.id === objectId)) {
-                    this.activeObjects.push({
-                        id: objectId,
-                        element: element,
-                        data: {
-                            id: objectId,
-                            name: objectData.objectName,
-                            label: objectData.objectLabel,
-                            scale: parseFloat(originalScale.split(' ')[0])
-                        },
-                        position: { x: 0, y: 0, z: 0 } // Sera mis à jour ci-dessous
-                    });
-                }
+                element.remove();
             });
+
+            // Spawner de nouveaux objets pour remplacer ceux qui ont été collectés
+            const allObjectsData = await this.loadObjectsData();
+
+            // Filtrer pour exclure les objets déjà présents dans la scène
+            const existingIds = this.activeObjects.map(obj => obj.id);
+            const availableObjects = allObjectsData.filter(obj => !existingIds.includes(obj.id));
+
+            console.log('[GameObject] Objets disponibles pour remplacement:', availableObjects.length);
+
+            // Sélectionner aléatoirement des objets pour remplacer ceux collectés
+            const shuffled = [...availableObjects].sort(() => Math.random() - 0.5);
+            const newObjects = shuffled.slice(0, collectedCount);
+
+            // Spawner les nouveaux objets
+            newObjects.forEach((objData) => {
+                // Utiliser le prochain index disponible
+                const nextIndex = this.activeObjects.length;
+                this.spawnObject(objData, nextIndex);
+            });
+
+            console.log('[GameObject] Nouveaux objets spawnés:', newObjects.length);
         }
 
         // Maintenant mélanger les positions de TOUS les objets
+        console.log('[GameObject] Mélange des positions de tous les objets');
         this.shufflePositions();
+
+        console.log('[GameObject] Réinitialisation terminée, objets actifs:', this.activeObjects.length);
     },
 
     /**
