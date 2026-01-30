@@ -92,9 +92,10 @@ const GameObject = {
         // Charger les données des objets
         const allObjectsData = await this.loadObjectsData();
         
-        // Sélectionner 7 objets aléatoires pour cette partie
+        // Sélectionner uniquement le nombre d'objets correspondant aux positions disponibles
+        const maxObjects = Math.min(this.config.objectCount, this.config.positions.length);
         const shuffledObjects = [...allObjectsData].sort(() => Math.random() - 0.5);
-        const objectsData = shuffledObjects.slice(0, this.config.objectCount);
+        const objectsData = shuffledObjects.slice(0, maxObjects);
         
         console.log('[GameObject] Objets sélectionnés pour cette partie:', objectsData.map(o => o.name));
 
@@ -102,6 +103,12 @@ const GameObject = {
         objectsData.forEach((objData, index) => {
             this.spawnObject(objData, index);
         });
+
+        // Signaler que les objets sont prêts
+        console.log('[GameObject] Objets prêts, émission de game:objectsReady');
+        document.dispatchEvent(new CustomEvent('game:objectsReady', {
+            detail: { objectCount: this.activeObjects.length }
+        }));
     },
 
     /**
@@ -459,6 +466,15 @@ const GameObject = {
             this.container.innerHTML = '';
         }
         this.activeObjects = [];
+    },
+
+    /**
+     * Retourne les données des objets actuellement actifs dans le jeu
+     * (uniquement les objets qui ont un emplacement et sont présents)
+     * @returns {Array} Liste des données des objets actifs
+     */
+    getActiveObjectsData: function () {
+        return this.activeObjects.map(obj => obj.data);
     }
 };
 

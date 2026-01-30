@@ -4,6 +4,7 @@
  */
 
 import { Game } from '../../core/Game.js';
+import { GameObject } from '../object/object.js';
 
 const Monster = {
     // Monstre actuel
@@ -158,16 +159,18 @@ const Monster = {
      * @param {number} size - Nombre d'objets dans la commande
      */
     generateOrder: async function(size) {
-        // Charger la liste des objets
-        const objectsData = await this.loadObjectsData();
+        // Utiliser uniquement les objets actifs (qui ont un emplacement dans le jeu)
+        const activeObjects = GameObject.getActiveObjectsData();
         
-        if (!objectsData || objectsData.length === 0) {
-            console.warn('[Monster] Pas d\'objets disponibles');
+        if (!activeObjects || activeObjects.length === 0) {
+            console.warn('[Monster] Pas d\'objets actifs disponibles');
             return;
         }
 
-        // Sélectionner des objets aléatoires
-        const shuffled = [...objectsData].sort(() => Math.random() - 0.5);
+        console.log('[Monster] Objets disponibles pour la commande:', activeObjects.map(o => o.name));
+
+        // Sélectionner des objets aléatoires parmi les objets actifs
+        const shuffled = [...activeObjects].sort(() => Math.random() - 0.5);
         const order = shuffled.slice(0, Math.min(size, shuffled.length));
 
         this.current.order = order.map(obj => obj.id);

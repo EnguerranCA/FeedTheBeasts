@@ -154,8 +154,13 @@ const Game = {
         // Générer le premier monstre et sa commande
         this.emit('game:start', { difficulty: this.state.difficulty });
         
-        // Déclencher la première commande
-        this.newOrder();
+        // Attendre que les objets soient prêts avant de déclencher la première commande
+        const onObjectsReady = () => {
+            console.log('[Game] Objets prêts, génération de la première commande');
+            document.removeEventListener('game:objectsReady', onObjectsReady);
+            this.newOrder();
+        };
+        document.addEventListener('game:objectsReady', onObjectsReady);
     },
 
     /**

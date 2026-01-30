@@ -5,8 +5,7 @@
         "label": "Baseball",
         "description": "Une balle de baseball usée",
         "path": "/assets/tofind/Baseball.glb",
-        "scale": 0.2,
-        "category": "sport"
+        "scale": 1,        "yOffset": 0.5,        "category": "sport"
     },
     {
         "id": "obj3",
@@ -15,6 +14,7 @@
         "description": "Un ballon de basket",
         "path": "/assets/tofind/Basketball.glb",
         "scale": 0.4,
+        "yOffset": 0.5,
         "category": "sport"
     },
     {
@@ -23,7 +23,7 @@
         "label": "Balai",
         "description": "Un balai magique peut-être ?",
         "path": "/assets/tofind/Broom.glb",
-        "scale": 0.3,
+        "scale": 0.25,
         "category": "item"
     },
     {
@@ -41,7 +41,7 @@
         "label": "Crabe",
         "description": "Un crabe croustillant",
         "path": "/assets/tofind/Crab.glb",
-        "scale": 0.02,
+        "scale": 0.03,
         "category": "creature"
     },
     {
@@ -59,7 +59,7 @@
         "label": "OEuf",
         "description": "Un œuf mystérieux",
         "path": "/assets/tofind/Egg.glb",
-        "scale": 0.01,
+        "scale": 0.007,
         "category": "food"
     },
     {
@@ -68,7 +68,7 @@
         "label": "Hibou",
         "description": "Un hibou majestueux",
         "path": "/assets/tofind/Great horned owl.glb",
-        "scale": 0.05,
+        "scale": 0.2,
         "category": "creature"
     },
     {
@@ -77,7 +77,7 @@
         "label": "Lune",
         "description": "Un morceau de lune",
         "path": "/assets/tofind/Moon.glb",
-        "scale": 0.03,
+        "scale": 0.010,
         "category": "celestial"
     },
     {
@@ -87,6 +87,7 @@
         "description": "Un ballon de football",
         "path": "/assets/tofind/Simple soccer football.glb",
         "scale": 0.3,
+        "yOffset": 0.5,
         "category": "sport"
     },
     {
@@ -95,8 +96,7 @@
         "label": "Bonhomme de Neige",
         "description": "Un bonhomme de neige glacé",
         "path": "/assets/tofind/Snowman.glb",
-        "scale": 0.5,
-        "category": "creature"
+        "scale": 1.0,        "yOffset": 1.0,        "category": "creature"
     },
     {
         "id": "obj13",
@@ -104,7 +104,7 @@
         "label": "Araignée",
         "description": "Une araignée effrayante",
         "path": "/assets/tofind/Spider.glb",
-        "scale": 0.1,
+        "scale": 0.15,
         "category": "creature"
     },
     {
@@ -113,7 +113,7 @@
         "label": "T-Rex",
         "description": "Un tyrannosaure miniature",
         "path": "/assets/tofind/T-Rex.glb",
-        "scale": 0.05,
+        "scale": 0.08,
         "category": "creature"
     },
     {
@@ -122,7 +122,7 @@
         "label": "Raquette de Ping-Pong",
         "description": "Une raquette de tennis de table",
         "path": "/assets/tofind/Table Tennis Paddle.glb",
-        "scale": 0.8,
+        "scale": 0.4,
         "category": "sport"
     },
     {
@@ -131,7 +131,7 @@
         "label": "Taco",
         "description": "Un taco délicieux",
         "path": "/assets/tofind/Taco.glb",
-        "scale": 0.3,
+        "scale": 0.75,
         "category": "food"
     },
     {
@@ -140,8 +140,7 @@
         "label": "Balle de Tennis",
         "description": "Une balle de tennis",
         "path": "/assets/tofind/Tennis ball.glb",
-        "scale": 0.2,
-        "category": "sport"
+        "scale": 4.0,        "yOffset": 0.5,        "category": "sport"
     },
     {
         "id": "obj19",
@@ -149,7 +148,7 @@
         "label": "Souris",
         "description": "Une petite souris jouet",
         "path": "/assets/tofind/Toy Mouse.glb",
-        "scale": 0.5,
+        "scale": 1.5,
         "category": "creature"
     }
 ]
