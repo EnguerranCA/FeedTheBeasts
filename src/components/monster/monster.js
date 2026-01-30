@@ -19,9 +19,9 @@ const Monster = {
 
     // Liste des types de monstres avec leurs modèles 3D
     types: [
-        { id: 'monster1', name: 'Blue Demon', model: './public/assets/monsters/Blue_Demon.glb' },
-        { id: 'monster2', name: 'Dragon Evolved', model: './public/assets/monsters/Dragon_Evolved.glb' },
-        { id: 'monster3', name: 'Orc', model: './public/assets/monsters/Orc.glb' }
+        { id: 'monster1', name: 'Blue Demon', model: '/assets/monsters/Blue_Demon.glb' },
+        { id: 'monster2', name: 'Dragon Evolved', model: '/assets/monsters/Dragon_Evolved.glb' },
+        { id: 'monster3', name: 'Orc', model: '/assets/monsters/Orc.glb' }
     ],
 
     /**
