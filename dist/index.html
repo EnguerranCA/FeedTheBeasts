@@ -169,13 +169,13 @@
       <!-- Fenêtre des monstres (devant le joueur) -->
       <a-entity id="monster-window" position="0 1.8 -0.6">
         <!-- Cadre de la fenêtre -->
-        <a-plane
+        <!-- <a-plane
           width="1.2"
           height="1.5"
           color="#2c2c2c"
           material="opacity: 0.95"
         >
-        </a-plane>
+        </a-plane> -->
 
         <!-- Zone du monstre (centre de la fenêtre) -->
         <a-entity id="current-monster" position="0 -0.2 0.05">
@@ -191,14 +191,7 @@
 
         <!-- Bulle de dialogue AU-DESSUS du monstre -->
         <a-entity id="speech-bubble" position="0 0.5 0.1" visible="true" class="clickable" opacity="1">
-          <!-- Fond de la bulle -->
-          <a-plane
-            width="1"
-            height="0.6"
-            color="#ffffff"
-            material="opacity: 0.95; side: double"
-          ></a-plane>
-          
+
           <!-- Texte de la demande -->
           <a-text
             id="monster-request"
@@ -225,7 +218,7 @@
       <!-- Comptoir (où déposer les objets) -->
       <a-box
         id="counter"
-        position="0 0.9 0"
+        position="0 1.37568 0"
         width="1.5"
         height="0.1"
         depth="0.5"
@@ -268,14 +261,6 @@
           color="#ffffff"
           width="1"
         ></a-text>
-        <a-text
-          id="order-text"
-          value="Order #1"
-          align="center"
-          position="0 -0.25 0.01"
-          color="#16213e"
-          width="0.8"
-        ></a-text>
       </a-plane>
 
       <!-- Ciel -->
@@ -283,6 +268,7 @@
 
     </a-scene>
 
-    <!-- Script principal du jeu -->
+    <!-- Script principal du jeu -->
+
   </body>
 </html>
