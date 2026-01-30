@@ -49,7 +49,7 @@ const Game = {
     /**
      * Initialise le jeu
      */
-    init: function() {
+    init: function () {
         console.log('[Game] Initialisation...');
         this.setupEventListeners();
         this.resetState();
@@ -64,7 +64,7 @@ const Game = {
     /**
      * Configure les écouteurs d'événements
      */
-    setupEventListeners: function() {
+    setupEventListeners: function () {
         // Boutons de menu
         const btnStart = document.querySelector('#btn-start');
         const btnEasy = document.querySelector('#btn-easy');
@@ -89,7 +89,7 @@ const Game = {
     /**
      * Réinitialise l'état du jeu
      */
-    resetState: function() {
+    resetState: function () {
         this.state = {
             isRunning: false,
             isPaused: false,
@@ -107,12 +107,12 @@ const Game = {
      * Définit la difficulté
      * @param {string} difficulty - 'easy', 'normal', 'hard'
      */
-    setDifficulty: function(difficulty) {
+    setDifficulty: function (difficulty) {
         console.log('[Game] Difficulté:', difficulty);
         this.state.difficulty = difficulty;
         this.state.timeRemaining = this.config[difficulty].duration;
         this.updateUI();
-        
+
         // Visual feedback
         document.querySelectorAll('#difficulty-buttons a-box').forEach(btn => {
             btn.setAttribute('scale', '1 1 1');
@@ -126,9 +126,9 @@ const Game = {
     /**
      * Démarre le jeu
      */
-    startGame: function() {
+    startGame: function () {
         console.log('[Game] Démarrage de la partie');
-        
+
         this.resetState();
         this.state.isRunning = true;
         this.state.timeRemaining = this.config[this.state.difficulty].duration;
@@ -153,7 +153,7 @@ const Game = {
 
         // Générer le premier monstre et sa commande
         this.emit('game:start', { difficulty: this.state.difficulty });
-        
+
         // Attendre que les objets soient prêts avant de déclencher la première commande
         const onObjectsReady = () => {
             console.log('[Game] Objets prêts, génération de la première commande');
@@ -166,7 +166,7 @@ const Game = {
     /**
      * Démarre le timer
      */
-    startTimer: function() {
+    startTimer: function () {
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
         }
@@ -175,6 +175,8 @@ const Game = {
             if (!this.state.isPaused && this.state.isRunning) {
                 this.state.timeRemaining--;
                 this.updateUI();
+
+                console.log('[Game] Timer tick:', this.state.timeRemaining, 'isRunning:', this.state.isRunning);
 
                 if (this.state.timeRemaining <= 0) {
                     this.endGame();
@@ -186,6 +188,8 @@ const Game = {
                 if (elapsed > 0 && elapsed % happeningInterval === 0) {
                     this.emit('game:happening');
                 }
+            } else {
+                console.log('[Game] Timer paused or stopped - isPaused:', this.state.isPaused, 'isRunning:', this.state.isRunning);
             }
         }, 1000);
     },
@@ -193,15 +197,15 @@ const Game = {
     /**
      * Génère une nouvelle commande
      */
-    newOrder: function() {
+    newOrder: function () {
         const orderSize = this.config[this.state.difficulty].orderSize;
         this.state.currentOrder = [];
         this.state.collectedItems = [];
 
         // L'événement sera écouté par le composant Monster
-        this.emit('game:newOrder', { 
+        this.emit('game:newOrder', {
             size: orderSize,
-            difficulty: this.state.difficulty 
+            difficulty: this.state.difficulty
         });
     },
 
@@ -209,17 +213,17 @@ const Game = {
      * Vérifie si un objet cliqué est dans la commande
      * @param {string} objectId - ID de l'objet cliqué
      */
-    checkObject: function(objectId) {
+    checkObject: function (objectId) {
         if (!this.state.isRunning) return;
 
         const orderIndex = this.state.currentOrder.indexOf(objectId);
-        
+
         if (orderIndex !== -1) {
             // Bon objet !
             this.state.collectedItems.push(objectId);
-            
+
             // NE PAS jouer de son ici - on attend la validation complète
-            
+
             this.emit('game:correctObject', { objectId });
 
             // Vérifier si la commande est complète
@@ -228,10 +232,10 @@ const Game = {
             }
         } else {
             // Mauvais objet
-            
+
             // Jouer le son d'erreur
             playSound('wrong', 0.6);
-            
+
             this.emit('game:wrongObject', { objectId });
         }
     },
@@ -239,9 +243,9 @@ const Game = {
     /**
      * Commande complétée
      */
-    orderComplete: function() {
+    orderComplete: function () {
         this.state.monstersServed++;
-        
+
         // Calcul du score (plus rapide = plus de points)
         const baseScore = 100 * this.state.currentOrder.length;
         const timeBonus = Math.floor(this.state.timeRemaining / 10);
@@ -250,7 +254,7 @@ const Game = {
             normal: 1.5,
             hard: 2
         };
-        
+
         const earned = Math.floor(baseScore * difficultyMultiplier[this.state.difficulty]) + timeBonus;
         this.state.score += earned;
 
@@ -259,10 +263,10 @@ const Game = {
         // Jouer UNIQUEMENT le son "correct" quand la commande est validée
         playSound('correct', 0.8);
 
-        this.emit('game:orderComplete', { 
+        this.emit('game:orderComplete', {
             earned,
             totalScore: this.state.score,
-            monstersServed: this.state.monstersServed 
+            monstersServed: this.state.monstersServed
         });
 
         this.updateUI();
@@ -278,11 +282,11 @@ const Game = {
     /**
      * Fin du jeu
      */
-    endGame: function() {
+    endGame: function () {
         console.log('[Game] Fin de partie! Score final: $' + this.state.score);
-        
+
         this.state.isRunning = false;
-        
+
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
@@ -307,15 +311,15 @@ const Game = {
     /**
      * Affiche l'écran de fin
      */
-    showEndScreen: function() {
+    showEndScreen: function () {
         const menuContainer = document.querySelector('#menu-container');
         if (menuContainer) {
             menuContainer.setAttribute('visible', 'true');
-            
+
             // Mettre à jour le texte du menu avec le score
             const menuText = menuContainer.querySelector('a-text[value*="Nourris"]');
             if (menuText) {
-                menuText.setAttribute('value', 
+                menuText.setAttribute('value',
                     `Score final: $${this.state.score}\nMonstres servis: ${this.state.monstersServed}`
                 );
             }
@@ -326,19 +330,19 @@ const Game = {
      * Active un bonus
      * @param {string} bonusType - Type de bonus
      */
-    activateBonus: function(bonusType) {
+    activateBonus: function (bonusType) {
         console.log('[Game] Bonus activé:', bonusType);
-        
+
         // Jouer le son de bonus
         playSound('bonus', 0.6);
-        
+
         this.emit('game:bonus', { type: bonusType });
     },
 
     /**
      * Met en pause le jeu
      */
-    pause: function() {
+    pause: function () {
         this.state.isPaused = true;
         this.emit('game:pause');
     },
@@ -346,7 +350,7 @@ const Game = {
     /**
      * Reprend le jeu
      */
-    resume: function() {
+    resume: function () {
         this.state.isPaused = false;
         this.emit('game:resume');
     },
@@ -354,7 +358,7 @@ const Game = {
     /**
      * Met à jour l'interface utilisateur
      */
-    updateUI: function() {
+    updateUI: function () {
         // Timer
         const timerText = document.querySelector('#timer-text');
         if (timerText) {
@@ -375,7 +379,7 @@ const Game = {
      * @param {string} eventName - Nom de l'événement
      * @param {object} detail - Détails de l'événement
      */
-    emit: function(eventName, detail = {}) {
+    emit: function (eventName, detail = {}) {
         const event = new CustomEvent(eventName, { detail });
         document.dispatchEvent(event);
     },
@@ -385,7 +389,7 @@ const Game = {
      * @param {string} eventName - Nom de l'événement
      * @param {function} callback - Fonction callback
      */
-    on: function(eventName, callback) {
+    on: function (eventName, callback) {
         document.addEventListener(eventName, callback);
     }
 };

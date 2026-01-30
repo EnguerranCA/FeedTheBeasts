@@ -63,8 +63,12 @@ const GameObject = {
         });
 
         // Nouvelle commande - repositionner les objets
-        document.addEventListener('game:newOrder', () => {
-            this.resetObjectsForNewOrder();
+        document.addEventListener('game:newOrder', async () => {
+            try {
+                await this.resetObjectsForNewOrder();
+            } catch (error) {
+                console.error('[GameObject] Erreur lors de la réinitialisation:', error);
+            }
         });
 
         // Bonus: surbrillance
@@ -162,6 +166,34 @@ const GameObject = {
     spawnObject: function (objData, index) {
         // Calculer une position aléatoire
         const position = this.getRandomPosition();
+
+        this._createObject(objData, position);
+    },
+
+    /**
+     * Spawne un objet à une position spécifique
+     * @param {object} objData - Données de l'objet
+     * @param {object} position - Position {x, y, z}
+     */
+    spawnObjectAtPosition: function (objData, position) {
+        this._createObject(objData, position);
+    },
+
+    /**
+     * Spawne un objet sans position (sera assignée plus tard par shufflePositions)
+     * @param {object} objData - Données de l'objet
+     */
+    spawnObjectWithoutPosition: function (objData) {
+        // Position temporaire au centre
+        const tempPosition = { x: 0, y: 0, z: 0 };
+        this._createObject(objData, tempPosition);
+    },
+
+    /**
+     * Crée l'entité A-Frame pour un objet
+     * @private
+     */
+    _createObject: function (objData, position) {
 
         // Créer l'entité A-Frame
         const entity = document.createElement('a-entity');
@@ -304,7 +336,12 @@ const GameObject = {
      * Mélange les positions des objets
      */
     shufflePositions: function () {
-        this.activeObjects.forEach(obj => {
+        console.log('[GameObject] Mélange des positions, objets actifs:', this.activeObjects.length);
+
+        // Réinitialiser le système de positions pour éviter les doublons
+        this.shuffleAllPositions();
+
+        this.activeObjects.forEach((obj, index) => {
             const newPos = this.getRandomPosition();
             obj.position = newPos;
 
@@ -314,6 +351,8 @@ const GameObject = {
                 dur: 800,
                 easing: 'easeInOutQuad'
             });
+
+            console.log(`[GameObject] Objet ${obj.id} déplacé vers position ${index}:`, newPos);
         });
     },
 
@@ -332,7 +371,7 @@ const GameObject = {
             const collectedObjects = Array.from(counterItems.children);
             console.log('[GameObject] Objets collectés à remplacer:', collectedCount);
 
-            // Supprimer les objets collectés
+            // Supprimer les objets collectés du DOM
             collectedObjects.forEach(element => {
                 element.remove();
             });
@@ -346,28 +385,28 @@ const GameObject = {
 
             console.log('[GameObject] Objets disponibles pour remplacement:', availableObjects.length);
 
-            // Sélectionner aléatoirement des objets pour remplacer ceux collectés
-            const shuffled = [...availableObjects].sort(() => Math.random() - 0.5);
-            const newObjects = shuffled.slice(0, collectedCount);
+            if (availableObjects.length > 0) {
+                // Sélectionner aléatoirement des objets pour remplacer ceux collectés
+                const shuffled = [...availableObjects].sort(() => Math.random() - 0.5);
+                const newObjects = shuffled.slice(0, Math.min(collectedCount, availableObjects.length));
 
-            // Spawner les nouveaux objets
-            newObjects.forEach((objData) => {
-                // Utiliser le prochain index disponible
-                const nextIndex = this.activeObjects.length;
-                this.spawnObject(objData, nextIndex);
-            });
+                // Spawner les nouveaux objets SANS position (ils seront positionnés par shufflePositions)
+                newObjects.forEach((objData) => {
+                    this.spawnObjectWithoutPosition(objData);
+                });
 
-            console.log('[GameObject] Nouveaux objets spawnés:', newObjects.length);
+                console.log('[GameObject] Nouveaux objets spawnés:', newObjects.length);
+            } else {
+                console.warn('[GameObject] Plus d\'objets disponibles pour le remplacement !');
+            }
         }
 
-        // Maintenant mélanger les positions de TOUS les objets
+        // Maintenant mélanger les positions de TOUS les objets pour éviter les superpositions
         console.log('[GameObject] Mélange des positions de tous les objets');
         this.shufflePositions();
 
         console.log('[GameObject] Réinitialisation terminée, objets actifs:', this.activeObjects.length);
-    },
-
-    /**
+    },    /**
      * Met en surbrillance les objets de la commande
      */
     highlightOrderObjects: function () {
